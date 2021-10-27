@@ -8,6 +8,7 @@ function App() {
         This is the header
       </header>
       <main>
+        SPRINT 1 - UI
         This is the main section
         <Hello name="Marge" />
         <Hello name='Homer' />
