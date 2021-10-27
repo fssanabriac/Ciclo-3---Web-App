@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import './components/Hello';
 
 function App() {
   return (
@@ -15,16 +16,22 @@ function App() {
         <Hello name='Bart' />
         <Hello name='Lisa' />
       </main>
+      <hr></hr>
       <footer>
         And this is the footer
+        <Bye name="Marge" surname="Simpson"/>
+        <Bye name="Homer" surname="Simpson"/>
       </footer>
     </div>
   );
 }
 
-function Hello(props){
+
+function Bye({ name, surname }){
   return(
-    <div>Hola {props.name}</div>
+    <div>
+      <span>Bye bye {name} {surname}</span>
+    </div>
   );
 }
 
