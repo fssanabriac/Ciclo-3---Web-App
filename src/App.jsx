@@ -1,10 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
+import  TestPage from 'pages/test_page';
 import Hello from 'components/Hello'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
+      <Router>
+        <Switch>
+          <Route path='/testPage'>
+            <TestPage/>
+          </Route>
+        </Switch>
+      </Router>
+
       <header className="App-header">
         This is the header
       </header>
