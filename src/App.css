@@ -1,3 +1,31 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.mainContainer > main {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.linkHome{
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.linkHome > h4{
+  background-color: lightgray;
+  border: 2px dotted green;
+  text-decoration: none;
+  color: darkgreen;
+  padding: 10px;
+  margin: 0px 0px;
+  width: fit-content;
+}
 .App {
   text-align: center;
 }
