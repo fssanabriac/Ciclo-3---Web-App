@@ -16,7 +16,7 @@ function Header(){
                     <button>Registrarse</button>
                 </Link>
                 <Link to='login'>
-                    <button>Ingresar</button>
+                    <button className='login-btn'>Ingresar</button>
                 </Link>
             </div>
         </header>

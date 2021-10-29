@@ -57,6 +57,14 @@ header {
   color: black;
 }
 
+.login-btn { 
+  padding: 6px;
+  color: azure;
+  background-color: rgb(75, 0, 130);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
 footer {
   background-color: darkgray;
   height: 5%;
