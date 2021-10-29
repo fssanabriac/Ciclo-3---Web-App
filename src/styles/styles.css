@@ -33,7 +33,7 @@
   width: fit-content;
 }
 
-.Header {
+header {
   height: 5%;
   background-color: rgb(70, 70, 112);
   padding: 5px;
@@ -50,4 +50,13 @@
 .Header__Icon {
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.Header__logo{
+  text-decoration: none;
+  color: black;
+}
+
+footer {
+  background-color: darkgray;
 }
