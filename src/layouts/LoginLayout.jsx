@@ -1,12 +1,14 @@
 import React from 'react'
+import Footer from 'components/Footer'
 
 const LoginLayout = ({children}) => {
     return (
-        <div>
-            <h2>This is the login loyout</h2>
+        <div className='mainContainer'>
+            <h5>This is the login layout</h5>
             <main>
                 {children}
             </main>
+            <Footer/>
         </div>
     )
 }

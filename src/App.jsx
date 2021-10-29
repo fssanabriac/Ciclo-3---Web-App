@@ -3,12 +3,12 @@ import HomeLayout from 'layouts/HomeLayout';
 import LoginLayout from 'layouts/LoginLayout';
 import PrivateLayout from 'layouts/PrivateLayout';
 
+import Home from 'pages/index';
 import TestPage from 'pages/test_page';
-import Home from 'pages/home';
 import Register from 'pages/register';
 import Login from 'pages/login';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Inside from 'pages/inside';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
@@ -30,24 +30,23 @@ function App() {
             </LoginLayout>
           </Route>
 
-          <Route path={['/logged']}>
+          <Route path={['/test','/admin']}>
             <PrivateLayout>
               <Switch>
                 <Route>
                   <Inside/>
                 </Route>
               </Switch>
-
-            </PrivateLayout>
-          </Route>
-
-          <Route path={['/test','/']}>
-            <HomeLayout>
               <Switch>
                 <Route path='/test'>
                   <TestPage/>
                 </Route>
               </Switch>
+            </PrivateLayout>
+          </Route>
+
+          <Route path={['/']}>
+            <HomeLayout>
               <Switch>
                 <Route path='/'>
                   <Home/>
