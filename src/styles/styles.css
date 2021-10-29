@@ -70,3 +70,11 @@ footer {
   width: 80%;
   margin: auto;
 }
+
+.navbar {
+  list-style: none;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

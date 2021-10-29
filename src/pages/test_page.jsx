@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 function TestPage(){
     return(
         <div>
+            <main>
             SPRINT 1 - UI
             <Link className='linkHome' to='/home'>
                 <h4>
@@ -43,6 +44,7 @@ function TestPage(){
             Hic quos in dolorum dolor suscipit alias corporis officiis corrupti tempora magnam sed tenetur numquam vel magni fugiat, sint iste? Voluptatibus atque nam facere modi illum aspernatur voluptatem dolorem ipsam?
             Totam voluptatibus amet voluptate officia, neque quis dolores, nihil temporibus aliquam suscipit exercitationem minus aut dolor facere. Iusto dolorum at commodi voluptatibus eaque voluptas veniam culpa id ad? Vero, dolorum!</div>
             <Bye name="Homer" surname="Simpson" />
+            </main>
         </div>
     );
 }

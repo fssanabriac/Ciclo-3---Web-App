@@ -2,12 +2,14 @@ import 'styles/styles.css';
 import HomeLayout from 'layouts/HomeLayout';
 import LoginLayout from 'layouts/LoginLayout';
 import PrivateLayout from 'layouts/PrivateLayout';
+import PrivateLayoutSeller from 'layouts/PrivateLayoutSeller';
 
-import Home from 'pages/index';
+import Home from 'pages/Index';
 import TestPage from 'pages/test_page';
 import Register from 'pages/register';
 import Login from 'pages/login';
-import Inside from 'pages/inside';
+import Inside from 'pages/private/inside';
+import Seller from 'pages/private/seller'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
@@ -28,6 +30,16 @@ function App() {
                 </Route>
               </Switch>
             </LoginLayout>
+          </Route>
+
+          <Route path={['/seller']}>
+            <PrivateLayoutSeller>
+              <Switch>
+                <Route path='/seller'>
+                  <Seller/>
+                </Route>
+              </Switch>
+            </PrivateLayoutSeller>
           </Route>
 
           <Route path={['/test','/admin']}>

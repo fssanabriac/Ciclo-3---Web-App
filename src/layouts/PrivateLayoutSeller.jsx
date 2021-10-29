@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from 'components/Footer'
-import NavbarAdmin from 'components/navbarAdmin';
+import NavbarSeller from 'components/navbarSeller';
 
-const PrivateLayout = ({children}) => {
+const PrivateLayoutSeller = ({children}) => {
     return (
         <div className='mainContainer'>
-            <NavbarAdmin/>
-            <h5>This is the private Layout for admins</h5>
+            <NavbarSeller/>
+            <h5>This is the private Layout for sellers</h5>
             <main>
                 {children}
             </main>
@@ -15,4 +15,4 @@ const PrivateLayout = ({children}) => {
     );
 }
 
-export default PrivateLayout;
+export default PrivateLayoutSeller;
