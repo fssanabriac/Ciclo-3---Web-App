@@ -252,23 +252,16 @@ footer {
   border-radius: 8px;
 }
 
-.test--listaProductos{
-  margin-top:10px;
-  background-color: gray;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.test--table{
-  width: 200px;
-  height: 200px;
-  border: blue dotted;
+table{
+  border-collapse: collapse;
 }
 
-.test--modificarProductos{
-  background-color: lightgrey;
-  padding-top: 10px;
+thead{
+  border-bottom: 3px solid black;
+}
+
+td{
+  text-align: left;
 }
 
 .linkHome{
