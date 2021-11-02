@@ -5,7 +5,7 @@ const NavbarAdmin = () => {
     return (
         <div className='navbar'>
             <div >
-                <Link className='navbar__logo' to='/admin/sells'>Logo/Name</Link>
+                <Link className='navbar__logo' to='/admin'>Logo/Name</Link>
             </div>
             <div>
                 <ul className='navbar__ul'>

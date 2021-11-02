@@ -2,7 +2,7 @@
 const Inside = ({children}) => {
     return (
         <div>
-            <h2>This is the admin Page</h2>
+            <h2>Bienvenido <i>Usuario</i>, este es el modulo de gestion de ventas</h2>
             {children}
         </div>
     )

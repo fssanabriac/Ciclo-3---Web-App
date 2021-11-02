@@ -13,6 +13,7 @@ import Seller from 'pages/private/seller'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Products from 'pages/private/products';
 import Sells from 'pages/private/sells';
+import Users from 'pages/private/users';
 
 function App() {
   return (
@@ -44,11 +45,16 @@ function App() {
             </PrivateLayoutSeller>
           </Route>
 
-          <Route path={['/test','/admin/products','/admin']}>
+          <Route path={['/test', '/admin/sells', '/admin/users/', '/admin/products', '/admin']}>
             <PrivateLayout>
               <Switch>
                 <Route path='/test'>
                   <TestPage/>
+                </Route>
+              </Switch>
+              <Switch>
+                <Route path='/admin/users' >
+                  <Users/>
                 </Route>
               </Switch>
               <Switch>
