@@ -3,6 +3,17 @@
   text-align: center;
 }
 
+
+header {
+  height: 5%;
+  background-color: rgb(70, 70, 112);
+  padding: 5px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -16,32 +27,7 @@
 }
 
 
-.linkHome{
-  display: flex;
-  flex-direction:row;
-  justify-content: center;
-  align-content: space-around;
-}
 
-.linkHome > h4{
-  background-color: lightgray;
-  border: 2px dotted green;
-  text-decoration: none;
-  color: darkgreen;
-  padding: 10px;
-  margin: 0px 0px;
-  width: fit-content;
-}
-
-header {
-  height: 5%;
-  background-color: rgb(70, 70, 112);
-  padding: 5px;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
 .Header__span {
   padding-left: 5px;
@@ -113,6 +99,7 @@ header {
 
 .Login__submit {
   width: 100%;
+  cursor: pointer;
   border:none;
   color:rgb(58, 57, 57);
   border-radius: 5px;
@@ -158,10 +145,106 @@ footer {
   margin: auto;
 }
 
-.navbar {
+.navbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding-bottom: 8px;
+  padding-left: 10px;
+}
+
+.navbar__ul {
   list-style: none;
   display:flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+}
+
+.navbar__link {
+  text-decoration: none;
+}
+
+.navbar__li {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+  color: rgb(112, 110, 110);
+  padding-bottom: 8px;
+}
+
+
+.navbar__li:hover{ 
+  color: black;
+  padding-bottom: 5px;
+  border-bottom: 3px solid blue;
+}
+
+.navbar__logout{
+  text-decoration: none;
+  color: teal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  padding-bottom: 8px;
+}
+/* =========== Test styles =====================*/
+.test--button{
+  background-color: cyan;
+  border:none;
+  border-radius: 8px;
+}
+
+.test--button:hover{
+  background-color: darkcyan;
+  color: white;
+  border:none;
+  border-radius: 8px;
+}
+
+.test--listaProductos{
+  margin-top:10px;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.test--table{
+  width: 200px;
+  height: 200px;
+  border: blue dotted;
+}
+
+.test--modificarProductos{
+  background-color: lightgrey;
+  padding-top: 10px;
+}
+
+.linkHome{
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.linkHome > h4{
+  background-color: lightgray;
+  border: 2px dotted green;
+  text-decoration: none;
+  color: darkgreen;
+  padding: 10px;
+  margin: 0px 0px;
+  width: fit-content;
 }

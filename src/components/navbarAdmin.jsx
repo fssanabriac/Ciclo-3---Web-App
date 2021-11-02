@@ -1,15 +1,32 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const NavbarAdmin = () => {
     return (
-        <div >
-            <ul className='navbar'>
-                <li>Registrar producto</li>
-                <li>Maestro Productos</li>
-                <li>Registrar venta</li>
-                <li>Maestro Ventas</li>
-                <li>Maestro Usuarios</li>
-            </ul>
+        <div className='navbar'>
+            <div >
+                <Link className='navbar__logo' to='/admin/sells'>Logo/Name</Link>
+            </div>
+            <div>
+                <ul className='navbar__ul'>
+                    <Link className='navbar__link' to='/admin/products'>
+                        <li className='navbar__li'>
+                            <div >Productos</div>
+                        </li>
+                    </Link>
+                    <Link className='navbar__link' to='/admin/sells'>
+                        <li className='navbar__li'>Ventas </li>
+                    </Link>
+                    <Link className='navbar__link' to='/admin/users'>
+                        <li className='navbar__li'>Usuarios </li>
+                    </Link>
+                </ul>
+            </div>
+            <div>
+                <Link className='navbar__logout' to='/'>
+                    Cerrar sesión
+                </Link>
+            </div>
         </div>
     );
 }

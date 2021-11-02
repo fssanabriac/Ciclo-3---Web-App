@@ -1,4 +1,3 @@
-import Footer from "components/Footer";
 
 const Seller= ({children}) => {
     return (
