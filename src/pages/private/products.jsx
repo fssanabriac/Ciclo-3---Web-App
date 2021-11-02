@@ -4,7 +4,6 @@ const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
     const [textButton, setTextButton] = useState('Crear Producto');
     
-    
     useEffect( (e) =>{
         if (verTabla){
             setTextButton('Crear Producto');
