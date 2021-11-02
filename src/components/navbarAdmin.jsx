@@ -1,11 +1,18 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const NavbarAdmin = () => {
     return (
         <div className='navbar'>
             <div >
-                <Link className='navbar__logo' to='/admin'>Logo/Name</Link>
+                <Link className='navbar__logo' to='/admin'>
+                    <div>
+                        <FontAwesomeIcon icon={faBook} />
+                        <span className='Header__Icon'>BooKing</span>
+                    </div>
+                </Link>
             </div>
             <div>
                 <ul className='navbar__ul'>

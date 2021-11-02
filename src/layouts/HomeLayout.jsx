@@ -7,8 +7,7 @@ const HomeLayout = ({children}) => {
     return (
         <div className='mainContainer'>
             <Header/>
-            <main className='mainLayout'>
-                This is the main section
+            <main className='HomeLayout__main'>
                 {children}
             </main>
             <Footer/>

@@ -8,15 +8,15 @@ function Header(){
             <Link className='Header__logo' to='/'>
                 <div>
                     <FontAwesomeIcon icon={faBook} />
-                    <span className='Header__Icon'>Enterprise</span>
+                    <span className='Header__Icon'>BooKing</span>
                 </div>
             </Link>
             <div >
                 <Link to='sign-in'>
-                    <button>Registrarse</button>
+                    <button className='Header__register-btn'>Registrarse</button>
                 </Link>
                 <Link to='login'>
-                    <button className='login-btn'>Ingresar</button>
+                    <button className='Header__login-btn'>Ingresar</button>
                 </Link>
             </div>
         </header>
