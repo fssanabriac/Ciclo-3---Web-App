@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
@@ -51,6 +53,7 @@ const Products = () => {
                 {textButton};
             </button>
             {verTabla ? <ListProducts lista={productos}/> : <UpdateProducts/>}
+            <ToastContainer position="bottom-right" autoClose={5000}/>
         </div>
     );
 }
@@ -84,22 +87,34 @@ const ListProducts = ({lista}) => {
 };
 
 const UpdateProducts = () => {
+
+    const formRef = useRef(null);
+    const submitFormulario =(e) =>{
+        e.preventDefault();
+        const datosFormulario = new FormData(formRef.current)
+        const nuevoProducto = {}
+        datosFormulario.forEach((value, key)=>{
+            nuevoProducto[key] = value
+            console.log(nuevoProducto)
+        })
+        console.log('submited', datosFormulario)
+    }
     return <div > 
         <h2>Crear nuevo producto</h2>
-        <form> 
+        <form ref={formRef} onSubmit={submitFormulario}> 
             <label htmlFor="idProdutct">Identificador de Producto
-                <input name="idProduct" type="text" />
+                <input name="idProduct" type="number" min={0} required/>
             </label>
             <label htmlFor="description">Descripción
                 <input name="description" type="text" />
             </label>
             <label htmlFor="unitValue">Valor unitario
-                <input name="unitValue" type="text" />
+                <input name="unitValue" type="number" min={0}required/>
             </label>
-            <label htmlFor="productState">Identificador de Producto
+            <label htmlFor="productState">Estado
                 <input name="productState" type="text" />
             </label>
-            <button type='submit'>Crear producto</button>
+            <button type='submit' >Crear producto</button>
         </form>
       </div>
 };

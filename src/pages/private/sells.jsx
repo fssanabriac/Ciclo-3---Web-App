@@ -163,10 +163,10 @@ const ModificarVentas = () =>{
     return <div>Aquí se crea o modifica una venta
         <form >
             <label htmlFor="productName">
-                <select name="productName" >
+                <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {
                         if (producto==="Seleccione su producto"){
-                            return <option disabled key={producto}>{producto}</option> 
+                            return <option disabled key={producto} value={0}>{producto}</option> 
                         }else{
                             return <option key={producto}>{producto}</option>
                         }
