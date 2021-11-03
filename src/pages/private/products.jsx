@@ -69,11 +69,11 @@ const ListProducts = ({lista}) => {
             </thead>
             <tbody>
                 {lista.map((producto) => {
-                    return <tr>
-                    <td>{producto.id}</td>
-                    <td>{producto.description}</td>
-                    <td>{producto.value}</td>
-                    <td>{producto.state}</td>
+                    return <tr key={producto.id}>
+                        <td>{producto.id}</td>
+                        <td>{producto.description}</td>
+                        <td>{producto.value}</td>
+                        <td>{producto.state}</td>
                 </tr>
                 })
                 }

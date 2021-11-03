@@ -16,7 +16,7 @@ const Sells = () => {
             nombreVendedor:"Homer Simpson",
         },
         {
-            idVenta:"1",
+            idVenta:"2",
             valorTotal:"20000",
             idProducto:"1",
             cantidad:"4",
@@ -27,7 +27,7 @@ const Sells = () => {
             nombreVendedor:"Homer Simpson",
         },
         {
-            idVenta:"1",
+            idVenta:"3",
             valorTotal:"20000",
             idProducto:"1",
             cantidad:"4",
@@ -79,7 +79,7 @@ const MostrarVentas = ({listaVentas}) =>{
             </thead>
             <tbody>
                 {listaVentas.map((venta)=> {
-                    return <tr>
+                    return <tr key={venta.idVenta}>
                         <td>{venta.idVenta}</td>
                         <td>{venta.valorTotal}</td>
                         <td>{venta.idProducto}</td>
@@ -155,18 +155,34 @@ const ModificarVentas = () =>{
             typeOption:"text"
         },
     ]
+    const productos =[
+        "Seleccione su producto", "Producto 1","Producto 2","Producto 3","Producto 4","Producto 5",
+        "Producto 6","Producto 7","Producto 8","Producto 9","Producto 10"
+    ]
 
     return <div>Aquí se crea o modifica una venta
         <form >
+            <label htmlFor="productName">
+                <select name="productName" >
+                    {productos.map((producto) => {
+                        if (producto==="Seleccione su producto"){
+                            return <option disabled key={producto}>{producto}</option> 
+                        }else{
+                            return <option key={producto}>{producto}</option>
+                        }
+                    })}
+                </select>
+            </label>
             {tags.map(
                 (tag)=>{
                 return <label key={tag.key} htmlFor={tag.htmlForOption}>
                     {tag.label}
-                    <input type={tag.typeOption} />
+                    <input name={tag.htmlForOption} type={tag.typeOption} />
                 </label>
                 }
             )
             }
+            <button type="submit">Crear Venta</button>
         </form>
     </div>
 }
