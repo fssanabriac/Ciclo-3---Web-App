@@ -328,8 +328,15 @@ footer {
   flex-direction: row;
   justify-content: space-around;
 }
+
 .Products__table__remove{
   color: rgb(235, 90, 90);
+}
+
+/* =============== Página de Usuarios ============ */
+
+.Users__title{
+
 }
 /* =========== Test styles =====================*/
 

@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Users = () => {
     const usuarios = [
@@ -45,15 +47,19 @@ const Users = () => {
     },[verListaUsuarios]);
     return (
         <div>
-           <button onClick={(e) => {setVerListaUsuarios(!verListaUsuarios)}}>{textoBotonUsuarios}</button>
-           {!verListaUsuarios ? <ActualizarRol/> : <ListaUsuarios listaUsuarios={usuarios}/>}
+            <div className='Products__title'> {/* Contenedor de titulo y boton que cambia estado de tabla*/}
+                {verListaUsuarios ? <h2>Lista de Usuarios</h2> : <h2>Actualizar rol de usuario</h2> }
+                <button className='Products__title__button' onClick={(e) => { setVerListaUsuarios(!verListaUsuarios) }}>{textoBotonUsuarios}</button>
+            </div>
+            <div className='abc'>
+                {!verListaUsuarios ? <ActualizarRol /> : <ListaUsuarios listaUsuarios={usuarios} />}
+            </div>
         </div>
     )
 }
 
 const ListaUsuarios = ({listaUsuarios}) => {
-    return <div className='flex-col-j-a-center'>
-        <h3>Lista de Usuarios</h3>
+    return <div className='Products__container-table'>
         <table>
             <thead>
                 <tr>
@@ -61,6 +67,7 @@ const ListaUsuarios = ({listaUsuarios}) => {
                     <th>Identificación</th>
                     <th>Rol</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,6 +77,10 @@ const ListaUsuarios = ({listaUsuarios}) => {
                         <td>{usuario.id}</td>
                         <td>{usuario.rol}</td>
                         <td>{usuario.estado}</td>
+                        <td className='Products__table__icons'>
+                            <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
+                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
+                        </td>
                     </tr>
                 })}
 
@@ -105,15 +116,15 @@ const ActualizarRol = () => {
             typeOption: "text",
         },
     ]
-    return <div>Actualizar usuario
-        <form className='flex-col-j-a-center'>
+    return <div>
+        <form className='Products__form'>
             {usersTagAttributes.map((tag)=>{
-                return <label key={tag.key} htmlFor={tag.htmlForOption}>
+                return <label className='Products__form__label' key={tag.key} htmlFor={tag.htmlForOption}>
                     {tag.label}
                     <input name={tag.htmlForOption} type={tag.typeOption} />
                 </label>
             })}
-            <button type="submit">Actualizar usuario</button>
+            <button className='Products__form__button' type="submit">Actualizar usuario</button>
         </form>
     </div>
 }
