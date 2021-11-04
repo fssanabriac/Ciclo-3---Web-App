@@ -49,7 +49,6 @@ const Sells = () => {
 
     return (
         <div>
-            <h2> This is the sells Page </h2>
             <button onClick={() => {setVerListaVentas(!verListaVentas)}}>
                 {textoBoton}
             </button>
@@ -161,7 +160,7 @@ const ModificarVentas = () =>{
     ]
 
     return <div>Aquí se crea o modifica una venta
-        <form >
+        <form className='flex-col-j-a-center'>
             <label htmlFor="productName">
                 <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {

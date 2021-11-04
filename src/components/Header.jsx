@@ -1,15 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import Logo from './logo';
 
 function Header(){
     return(
         <header >
             <Link className='Header__logo' to='/'>
-                <div>
-                    <FontAwesomeIcon icon={faBook} />
-                    <span className='Header__Icon'>BooKing</span>
-                </div>
+                <Logo/>
             </Link>
             <div >
                 <Link to='sign-in'>

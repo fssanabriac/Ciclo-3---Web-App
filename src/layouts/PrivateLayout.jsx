@@ -6,8 +6,8 @@ const PrivateLayout = ({children}) => {
     return (
         <div className='mainContainer'>
             <NavbarAdmin/>
-            <h5>This is the private Layout for admins</h5>
-            <main>
+            {/* <h5>This is the private Layout for admins</h5> */}
+            <main className='flex-col-j-a-center'>
                 {children}
             </main>
             <Footer/>

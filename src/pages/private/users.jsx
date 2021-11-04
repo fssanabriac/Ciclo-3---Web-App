@@ -53,7 +53,7 @@ const Users = () => {
 }
 
 const ListaUsuarios = ({listaUsuarios}) => {
-    return <div>
+    return <div className='flex-col-j-a-center'>
         <h3>Lista de Usuarios</h3>
         <table>
             <thead>
@@ -107,7 +107,7 @@ const ActualizarRol = () => {
         },
     ]
     return <div>Actualizar usuario
-        <form>
+        <form className='flex-col-j-a-center'>
             {usersTagAttributes.map((tag)=>{
                 return <label key={tag.key} htmlFor={tag.htmlForOption}>
                     {tag.label}

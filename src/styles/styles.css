@@ -7,10 +7,12 @@ body{
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 .mainContainer {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
   overflow-y: hidden;
   background-color: rgba(220, 228, 252, 0.918);
 }
@@ -210,6 +212,7 @@ footer {
 
 .navbar__link {
   text-decoration: none;
+  padding-left: 15px;
 }
 
 .navbar__li {
@@ -220,6 +223,7 @@ footer {
   font-weight: bold;
   color: rgb(112, 110, 110);
   padding-bottom: 8px;
+  display: flex;
 }
 
 
@@ -227,6 +231,10 @@ footer {
   color: black;
   padding-bottom: 5px;
   border-bottom: 3px solid blue;
+}
+
+.navbar__li__text{
+  padding-left:0.5rem;
 }
 
 .navbar__logout{
@@ -238,18 +246,24 @@ footer {
   padding-right: 10px;
   padding-bottom: 8px;
 }
+/* =============== Página de Productos ============ */
+
+
 /* =========== Test styles =====================*/
 .test--button{
-  background-color: cyan;
+  background-color: teal;
+  color:white ;
   border:none;
-  border-radius: 8px;
+  border-radius: 4px;
+  padding: 10px 10px;
 }
 
 .test--button:hover{
-  background-color: darkcyan;
+  background-color: darkgreen;
   color: white;
+  font-weight: bolder;
   border:none;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 table{
@@ -279,4 +293,14 @@ td{
   padding: 10px;
   margin: 0px 0px;
   width: fit-content;
+}
+
+.h-full{
+  height: 100vh;
+}
+.flex-col-j-a-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

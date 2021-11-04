@@ -1,8 +1,12 @@
+import Logo from 'components/logo';
 import {Link} from 'react-router-dom'
 
 function Login(){
     return(
         <div className='Login__container'>
+            <Link to="/">
+                <Logo />
+            </Link>
             <h2 className='login-title'>Inicia Sesión</h2>
             <form action="" className='Login__form'>
                 <div className='Login__inputs'>
