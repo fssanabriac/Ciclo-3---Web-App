@@ -45,7 +45,6 @@ const Users = () => {
     },[verListaUsuarios]);
     return (
         <div>
-           <h2>Esta es la pagina de administracion de usuarios</h2> 
            <button onClick={(e) => {setVerListaUsuarios(!verListaUsuarios)}}>{textoBotonUsuarios}</button>
            {!verListaUsuarios ? <ActualizarRol/> : <ListaUsuarios listaUsuarios={usuarios}/>}
         </div>

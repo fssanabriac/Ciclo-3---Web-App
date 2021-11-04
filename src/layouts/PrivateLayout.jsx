@@ -7,8 +7,22 @@ const PrivateLayout = ({children}) => {
         <div className='mainContainer'>
             <NavbarAdmin/>
             {/* <h5>This is the private Layout for admins</h5> */}
-            <main className='flex-col-j-a-center'>
+            <main >
+                <div className='a'></div>
+                <div className='center'>
                 {children}
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
+                </div>
+                <div className='a'></div>
             </main>
             <Footer/>
         </div>

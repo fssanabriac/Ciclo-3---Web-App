@@ -18,8 +18,15 @@ body{
 }
 
 .mainContainer > main {
-  height: 100vh;
   overflow-y: scroll;
+  display: flex;
+}
+
+.a{
+  width: 12.5%;
+}
+.center{
+  width: 75%;
 }
 
 .HomeLayout__main{
@@ -248,23 +255,84 @@ footer {
 }
 /* =============== Página de Productos ============ */
 
-
-/* =========== Test styles =====================*/
-.test--button{
-  background-color: teal;
-  color:white ;
-  border:none;
-  border-radius: 4px;
-  padding: 10px 10px;
+.Products__title{
+  width:100%;
+  display: flex;
+  justify-content:  space-between;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-.test--button:hover{
+.Products__title > h2{
+  margin: 0px;
+}
+
+.Products__title__button{
+  background-color: teal;
+  color:rgb(27, 26, 26) ;
+  border:none;
+  border-radius: 4px;
+  padding: 5px 5px;
+}
+
+.Products__title__button:hover{
   background-color: darkgreen;
   color: white;
-  font-weight: bolder;
+  font-weight: 500;
   border:none;
   border-radius: 4px;
 }
+
+.Products__form{
+  width: 60%;
+  margin: auto;
+  margin-top:1rem;
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: start;
+  padding: 2rem 3rem;
+  box-shadow: 3px 3px 2px gray;
+}
+
+.Products__form__label{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin:0.4rem 0rem;
+}
+
+.Products__form__button{
+  color: black;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-bottom-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: greenyellow;
+}
+
+.Products__container-table{
+  width: 70%;
+  margin: auto;
+  margin-top:1rem;
+}
+
+.Products__table__edit{
+  color: dimgrey;
+}
+.Products__table__icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.Products__table__remove{
+  color: rgb(235, 90, 90);
+}
+/* =========== Test styles =====================*/
+
 
 table{
   border-collapse: collapse;
@@ -274,9 +342,14 @@ thead{
   border-bottom: 3px solid black;
 }
 
-td{
+th, td{
   text-align: left;
+  padding-right: 20px;
+  padding-top:5px;
+  padding-bottom:5px;
 }
+
+
 
 .linkHome{
   display: flex;
@@ -303,4 +376,14 @@ td{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.flex-col-j-start{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.abc{
+  /* background-color: blue; */
 }
