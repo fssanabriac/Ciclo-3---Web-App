@@ -333,10 +333,16 @@ footer {
   color: rgb(235, 90, 90);
 }
 
-/* =============== Página de Usuarios ============ */
+/* =============== Página de Ventas ============ */
 
-.Users__title{
+.Sells__container-table{
+  width: 100%;
+  margin: auto;
+  margin-top:1rem;
+}
 
+.Sells__container-table  table  th{
+  font-size: small;
 }
 /* =========== Test styles =====================*/
 

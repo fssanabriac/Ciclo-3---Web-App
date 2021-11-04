@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
@@ -49,10 +51,16 @@ const Sells = () => {
 
     return (
         <div>
-            <button onClick={() => {setVerListaVentas(!verListaVentas)}}>
-                {textoBoton}
-            </button>
-            { verListaVentas ? <MostrarVentas listaVentas={ventas}/> : <ModificarVentas/>}
+            <div className='Products__title'>
+                {verListaVentas ? <h2>Lista de ventas</h2> : <h2>Registrar venta</h2> }
+
+                <button className='Products__title__button' onClick={() => { setVerListaVentas(!verListaVentas) }}>
+                    {textoBoton}
+                </button>
+            </div>
+            <div className='abc'>
+                {verListaVentas ? <MostrarVentas listaVentas={ventas} /> : <ModificarVentas />}
+            </div>
         </div>
     )
 }
@@ -60,8 +68,7 @@ const Sells = () => {
 export default Sells
 
 const MostrarVentas = ({listaVentas}) =>{
-    return <div>
-        Esta es la lista de ventas
+    return <div className='Sells__container-table'>
         <table>
             <thead>
                 <tr>
@@ -74,6 +81,7 @@ const MostrarVentas = ({listaVentas}) =>{
                     <th>Id Comprador</th>
                     <th>Nombre Comprador</th>
                     <th>Nombre vendedor</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,6 +96,10 @@ const MostrarVentas = ({listaVentas}) =>{
                         <td>{venta.idComprador}</td>
                         <td>{venta.nombreComprador}</td>
                         <td>{venta.nombreVendedor}</td>
+                        <td className='Products__table__icons'>
+                            <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
+                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
+                        </td>
                     </tr>
                 }
                 )}
@@ -159,8 +171,8 @@ const ModificarVentas = () =>{
         "Producto 6","Producto 7","Producto 8","Producto 9","Producto 10"
     ]
 
-    return <div>Aquí se crea o modifica una venta
-        <form className='flex-col-j-a-center'>
+    return <div>
+        <form className='Products__form'>
             <label htmlFor="productName">
                 <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {
@@ -174,14 +186,14 @@ const ModificarVentas = () =>{
             </label>
             {tags.map(
                 (tag)=>{
-                return <label key={tag.key} htmlFor={tag.htmlForOption}>
+                return <label className='Products__form__label' key={tag.key} htmlFor={tag.htmlForOption}>
                     {tag.label}
                     <input name={tag.htmlForOption} type={tag.typeOption} />
                 </label>
                 }
             )
             }
-            <button type="submit">Crear Venta</button>
+            <button className='Products__form__button' type="submit">Crear Venta</button>
         </form>
     </div>
 }

@@ -11,16 +11,6 @@ const PrivateLayout = ({children}) => {
                 <div className='a'></div>
                 <div className='center'>
                 {children}
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veniam nisi, commodi suscipit enim voluptatem dolores? Ea saepe fugit corrupti cupiditate hic, nihil similique beatae minima delectus facilis vitae architecto?
                 </div>
                 <div className='a'></div>
             </main>
