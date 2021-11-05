@@ -330,6 +330,15 @@ footer {
   background-color: greenyellow;
 }
 
+table tr:nth-child(even){
+  background-color: #f3f3f3;
+}
+
+table tr:hover{
+  background-color: #ccc;
+  cursor: pointer;
+}
+
 .Products__container-table{
   width: 70%;
   margin: auto;
@@ -337,8 +346,21 @@ footer {
 }
 
 .Products__table__edit{
-  color: dimgrey;
+  color: darkgray;
 }
+
+.Products__table__edit:hover{
+  color: dimgray;
+}
+
+.Products__table__confirm-button{
+  color: rgba(0, 128, 0, 0.555);
+}
+
+.Products__table__confirm-button:hover{
+  color: rgb(102, 255, 0);
+}
+
 .Products__table__icons{
   display: flex;
   flex-direction: row;
@@ -346,6 +368,10 @@ footer {
 }
 
 .Products__table__remove{
+  color: rgba(235, 90, 90, 0.466);
+}
+
+.Products__table__remove:hover{
   color: rgb(235, 90, 90);
 }
 

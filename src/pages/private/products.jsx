@@ -1,9 +1,10 @@
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import React, {useEffect, useState, useRef} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {nanoid} from 'nanoid'
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
@@ -68,34 +69,26 @@ const Products = () => {
 const ListProducts = ({lista}) => {
     return <div className='Products__container-table'> 
 
-        <table >
-            <thead>
-                <tr>
-                    <th>Identificador</th>
-                    <th>Descripción</th>
-                    <th>Valor Unitario</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {lista.map((producto) => {
-                    return <tr key={producto.id}>
-                        <td>{producto.id}</td>
-                        <td>{producto.description}</td>
-                        <td>{producto.value}</td>
-                        <td>{producto.state}</td>
-                        <td className='Products__table__icons'>
-                            <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
-                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
-                        </td>
-                </tr>
-                })
-                }
-            </tbody>
-        </table>
-      </div>
-
+        <form >
+            <table >
+                <thead>
+                    <tr>
+                        <th>Identificador</th>
+                        <th>Descripción</th>
+                        <th>Valor Unitario</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {lista.map((producto) => {
+                        return <FilaProducto key={nanoid()} producto={producto} />
+                    })
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>
 };
 
 
@@ -134,5 +127,45 @@ const UpdateProducts = () => {
         </form>
       </div>
 };
+
+const FilaProducto = ({producto}) => {
+    const [edit, setEdit] = useState(false);
+
+    useEffect(() => {
+        return  console.log(edit)
+            
+        } , [edit])
+    return (
+        <tr >
+            {edit ?
+                <>
+                    <td><input type="text" defaultValue={producto.id}/></td>
+                    <td><input type="text" defaultValue={producto.description}/></td>
+                    <td><input type="text" defaultValue={producto.value}/></td>
+                    <td><input type="text" defaultValue={producto.state}/></td>
+                </>
+                :
+                <>
+                    <td>{producto.id}</td>
+                    <td>{producto.description}</td>
+                    <td>{producto.value}</td>
+                    <td>{producto.state}</td>
+                </>
+            }
+            <td className='Products__table__icons'>
+                {edit ? 
+                <button type="submit">
+                        <FontAwesomeIcon onClick={() => setEdit(!edit)} className='Products__table__confirm-button' icon={faCheckSquare} />
+                </button>
+                :
+                <button type="submit">
+                        <FontAwesomeIcon onClick={() => setEdit(!edit)} className='Products__table__edit' icon={faEdit} />
+                </button>
+                }
+                <FontAwesomeIcon className='Products__table__remove' icon={faTrash} />
+            </td>
+        </tr>
+    )
+}
 
 export default Products;

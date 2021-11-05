@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Logo from 'components/logo'
-import { faBook, faBoxOpen, faShoppingCart, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faShoppingCart, faUsers } from '@fortawesome/free-solid-svg-icons';
+import useIsActiveNavbar from 'hooks/useIsActiveNavbar';
 
 const NavbarAdmin = () => {
 
@@ -11,8 +11,7 @@ const NavbarAdmin = () => {
         <div className='navbar'>
             <div >
                 <Link className='navbar__logo' to='/admin'>
-                    <FontAwesomeIcon icon={faBook}/>
-                    BooKing
+                    <Logo/>
                 </Link>
             </div>
             <div>
@@ -32,20 +31,8 @@ const NavbarAdmin = () => {
 }
 
 const Ruta = ({ruta, icon, texto})=>{
-    const location = useLocation();
-    const [isActive, setIsActive] = useState(false)
+    const isActive = useIsActiveNavbar({ruta});
 
-    useEffect(() => {
-
-        if (location.pathname.includes(ruta)){
-            setIsActive(true);
-        }else{
-            setIsActive(false);
-        }
-        return () => {
-           console.log(location) 
-        }
-    }, [location, ruta])
     return(
         <Link className='navbar__link' to={ruta}>
             <li className={`navbar__li ${isActive ? 'navbar__li--active':''}`}>
