@@ -14,7 +14,6 @@ body{
   height: 100vh;
   width: 100vw;
   overflow-y: hidden;
-  background-color: rgba(220, 228, 252, 0.918);
 }
 
 .mainContainer > main {
@@ -22,11 +21,22 @@ body{
   display: flex;
 }
 
+.LoginLayout__mainContainer{
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.LoginLayout__mainContainer > main{
+  height: 100vh;
+}
 .a{
   width: 12.5%;
 }
 .center{
   width: 75%;
+  height: 100vh;
 }
 
 .HomeLayout__main{
@@ -229,16 +239,22 @@ footer {
   margin-right: 5px;
   font-weight: bold;
   color: rgb(112, 110, 110);
+  padding-top:8px;
   padding-bottom: 8px;
   display: flex;
 }
 
-
 .navbar__li:hover{ 
-  color: black;
+  color: darkslategrey;
   padding-bottom: 5px;
   border-bottom: 3px solid blue;
 }
+
+.navbar__li--active {
+  background-color: lightgray;
+  color: black;
+}
+
 
 .navbar__li__text{
   padding-left:0.5rem;

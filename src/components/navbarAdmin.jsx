@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Logo from 'components/logo'
 import { faBook, faBoxOpen, faShoppingCart, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const NavbarAdmin = () => {
+
     return (
         <div className='navbar'>
             <div >
@@ -15,23 +17,9 @@ const NavbarAdmin = () => {
             </div>
             <div>
                 <ul className='navbar__ul'>
-                    <Link className='navbar__link' to='/admin/products'>
-                        <li className='navbar__li'>
-                            <FontAwesomeIcon icon={faBoxOpen}/>
-                            <div className='navbar__li__text'>Productos</div>
-                        </li>
-                    </Link>
-                    <Link className='navbar__link' to='/admin/sells'>
-                        <li className='navbar__li'>
-                            <FontAwesomeIcon icon={faShoppingCart}/>
-                            <div className='navbar__li__text'>Ventas</div> </li>
-                    </Link>
-                    <Link className='navbar__link' to='/admin/users'>
-                        <li className='navbar__li'>
-                            <FontAwesomeIcon icon={faUsers}/>
-                            <div className='navbar__li__text'>Usuarios</div>
-                        </li>
-                    </Link>
+                    <Ruta ruta='/admin/products' icon={faBoxOpen} texto='Productos'/>
+                    <Ruta ruta='/admin/sells' icon={faShoppingCart} texto='Ventas'/>
+                    <Ruta ruta='/admin/users' icon={faUsers} texto='Usuarios'/>
                 </ul>
             </div>
             <div>
@@ -41,6 +29,31 @@ const NavbarAdmin = () => {
             </div>
         </div>
     );
+}
+
+const Ruta = ({ruta, icon, texto})=>{
+    const location = useLocation();
+    const [isActive, setIsActive] = useState(false)
+
+    useEffect(() => {
+
+        if (location.pathname.includes(ruta)){
+            setIsActive(true);
+        }else{
+            setIsActive(false);
+        }
+        return () => {
+           console.log(location) 
+        }
+    }, [location, ruta])
+    return(
+        <Link className='navbar__link' to={ruta}>
+            <li className={`navbar__li ${isActive ? 'navbar__li--active':''}`}>
+                <FontAwesomeIcon icon={icon} />
+                <div className='navbar__li__text'>{texto}</div>
+            </li>
+        </Link>
+    )
 }
 
 export default NavbarAdmin;

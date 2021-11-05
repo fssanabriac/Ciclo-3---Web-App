@@ -3,7 +3,7 @@ import Footer from 'components/Footer'
 
 const LoginLayout = ({children}) => {
     return (
-        <div className='mainContainer'>
+        <div className='Login__Layout__mainContainer'>
             {/* <h5>This is the login layout</h5> */}
             <main>
                 {children}
