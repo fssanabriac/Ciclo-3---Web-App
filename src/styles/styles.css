@@ -581,7 +581,13 @@ footer {
   border: none;
   border-bottom-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  background-color: greenyellow;
+  background-color: #318aac;
+}
+
+.Products__form__button:hover {
+  cursor: pointer;
+  background: #0b2a3b;
+  color: #fff !important;
 }
 
 table tr:nth-child(even){
