@@ -5,50 +5,40 @@ import React, {useEffect, useState, useRef} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {nanoid} from 'nanoid'
+import axios from 'axios'
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
     const [textButton, setTextButton] = useState('Crear Producto');
     const [productos, setProductos] = useState([]); // Recibe la lista de productos del backend
+    const [consultarTabla, setConsultarTabla] = useState(true);
 
-    const listaProductosBackend = [
-        {
-            id:1,
-            description:"Producto 1",
-            value: 10000,
-            state: "Disponible"
-        },
-        {
-            id:2,
-            description:"Producto 2",
-            value: 20000,
-            state: "Disponible"
-        },
-        {
-            id:3,
-            description:"Producto 3",
-            value: 30000,
-            state: "Disponible"
-        },
-        {
-            id:4,
-            description:"Producto 4",
-            value: 40000,
-            state: "No Disponible"
+    useEffect(() => {
+        const fromBackEnd = async () =>{
+        const options = { method: 'GET', url: 'http://localhost:5000/productos' };
+
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+            setProductos(response.data)
+        }).catch(function (error) {
+            console.error(error);
+        });
+    };
+
+        if (consultarTabla){
+            fromBackEnd(); 
+            setConsultarTabla(false);
         }
-   ];
-    
+    }, [consultarTabla]);
+
     useEffect( (e) =>{
         if (verTabla){
             setTextButton('Crear Producto');
         }else{
             setTextButton('Ver Lista de Productos');
+            setConsultarTabla(true);
         }
     },[verTabla]) // cambia el texto del boton cada que verTabla es modificado
-
-    useEffect((e) =>{
-        setProductos(listaProductosBackend);
-    },[])
 
     return (
         <div className='h-full flex-col-j-start'>
@@ -60,17 +50,17 @@ const Products = () => {
                 
             </div>
             <div className='abc'>
-                {verTabla ? <ListProducts lista={productos} /> : <UpdateProducts />}
+                {verTabla ? <ListProducts lista={productos} setConsultarTabla={setConsultarTabla}/> : <UpdateProducts setConsultarTabla={setConsultarTabla}/>}
             </div>
             <ToastContainer position="bottom-right" autoClose={5000}/>
         </div>
     );
 }
 
-const ListProducts = ({lista}) => {
+const ListProducts = ({lista, setConsultarTabla}) => {
     return <div className='Products__container-table'> 
 
-        <form >
+        <form>
             <table >
                 <thead>
                     <tr>
@@ -83,7 +73,7 @@ const ListProducts = ({lista}) => {
                 </thead>
                 <tbody>
                     {lista.map((producto) => {
-                        return <FilaProducto key={nanoid()} producto={producto} />
+                        return <FilaProducto key={nanoid()} producto={producto} setConsultarTabla={setConsultarTabla}/>
                     })
                     }
                 </tbody>
@@ -93,45 +83,119 @@ const ListProducts = ({lista}) => {
 };
 
 
-const UpdateProducts = () => {
+const UpdateProducts = ({setConsultarTabla}) => {
 
     const formRef = useRef(null);
-    const submitFormulario =(e) =>{
-        e.preventDefault();
+    const submitFormulario = async (e) =>{
+        // e.preventDefault();
         const datosFormulario = new FormData(formRef.current)
         const nuevoProducto = {}
         datosFormulario.forEach((value, key)=>{
             nuevoProducto[key] = value
-            console.log(nuevoProducto)
+            console.log('\t Here: ' + nuevoProducto)
         })
         console.log('submited', datosFormulario)
+        const options = {
+            method: 'POST',
+            url: 'http://localhost:5000/productos',
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                description: nuevoProducto.description,
+                state: nuevoProducto.state,
+                price:nuevoProducto.price}
+          };
+          
+        await axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Producto creado exitosamente.');
+            setConsultarTabla(true);
+        }).catch(function (error) {
+            console.error(error);
+            toast.error('No se pudo crear el producto.');
+        });
     }
     return <div > 
         <form className='Products__form' ref={formRef} onSubmit={submitFormulario}> 
-            <label className='Products__form__label' htmlFor="idProdutct">
-                Id del Producto
-                <input name="idProduct" type="number" min={0} required/>
-            </label>
+            {/* <label className='Products__form__label' htmlFor="idProdutct"> */}
+                {/* Id del Producto */}
+                {/* <input name="idProduct" type="number" min={0} required/> */}
+            {/* </label> */}
             <label className='Products__form__label' htmlFor="description">
                 Descripción
                 <input name="description" type="text" />
             </label>
-            <label className='Products__form__label' htmlFor="unitValue">
+            <label className='Products__form__label' htmlFor="price">
                 Valor unitario
-                <input name="unitValue" type="number" min={0}required/>
+                <input name="price" type="number" min={0}required/>
             </label>
-            <label className='Products__form__label' htmlFor="productState">
+            <label className='Products__form__label' htmlFor="state">
                 Estado
-                <input name="productState" type="text" />
+                {/* <input name="state" type="text" /> */}
+                        <select defaultValue={0} name="state" >
+                            <option disabled value={0}>Seleccione el estado</option>
+                            <option >Disponible</option>
+                            <option >No disponible</option>
+                        </select>
             </label>
             <button className='Products__form__button' type='submit' >Crear producto</button>
         </form>
       </div>
 };
 
-const FilaProducto = ({producto}) => {
+const FilaProducto = ({producto, setConsultarTabla}) => {
     const [edit, setEdit] = useState(false);
+    const [infoNuevoProducto, setInfoNuevoProducto] = useState({
+        description : producto.description,
+        price : producto.price,
+        state : producto.state
+        });
+    // console.log('infoNuevoProducto', infoNuevoProducto);
 
+    const actualizarProducto = async () => {
+        console.log(infoNuevoProducto);
+        // enviar al BackEnd.
+
+        const options = {
+            method: 'PATCH',
+            url: `http://localhost:5000/productos/${producto._id}`,
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                ...infoNuevoProducto,
+                id:infoNuevoProducto._id,
+                description:infoNuevoProducto.description,
+                price: infoNuevoProducto.price,
+                state: infoNuevoProducto.state
+            }
+            // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
+          };
+          
+          await axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Producto actualizado con exito.')
+            setConsultarTabla(true);
+          }).catch(function (error) {
+            console.error(error);
+            toast.error('Producto no pudo ser actualizado.')
+          });
+    };
+        
+    const eliminarProducto = async() =>{
+        const options = {
+            method: 'DELETE',
+            url: `http://localhost:5000/productos/${producto._id}`,
+            headers: {'Content-Type': 'application/json'},
+            data:{...infoNuevoProducto, id:producto._id}
+          };
+          
+          axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Producto eliminado exitosamente.')
+            setConsultarTabla(true);
+          }).catch(function (error) {
+            console.error(error);
+            toast.error('Error eliminando producto.')
+          });
+    }
     useEffect(() => {
         return  console.log(edit)
             
@@ -140,30 +204,55 @@ const FilaProducto = ({producto}) => {
         <tr >
             {edit ?
                 <>
-                    <td><input type="text" defaultValue={producto.id}/></td>
-                    <td><input type="text" defaultValue={producto.description}/></td>
-                    <td><input type="text" defaultValue={producto.value}/></td>
-                    <td><input type="text" defaultValue={producto.state}/></td>
+                    <td>{producto.id}</td>
+                    <td>
+                        <input 
+                            type="text"
+                            defaultValue={producto.description}
+                            onChange={(e) => setInfoNuevoProducto({ ...infoNuevoProducto, description: e.target.value })} />
+                    </td>
+                    <td>
+                        <input 
+                            type="text"
+                            defaultValue={producto.price}
+                            onChange={(e) => setInfoNuevoProducto({ ...infoNuevoProducto, price: e.target.value })} />
+                    </td>
+                    <td>
+                        <select 
+                            defaultValue={0} 
+                            onChange={(e) => setInfoNuevoProducto({ ...infoNuevoProducto, state: e.target.value })} 
+                        >
+                            <option disabled value={0}>Seleccione el estado</option>
+                            <option >Disponible</option>
+                            <option >No disponible</option>
+                        </select>
+                    </td>
                 </>
                 :
                 <>
-                    <td>{producto.id}</td>
+                    <td>{producto._id}</td>
                     <td>{producto.description}</td>
-                    <td>{producto.value}</td>
+                    <td>{producto.price}</td>
                     <td>{producto.state}</td>
                 </>
             }
             <td className='Products__table__icons'>
                 {edit ? 
-                <button type="submit">
-                        <FontAwesomeIcon onClick={() => setEdit(!edit)} className='Products__table__confirm-button' icon={faCheckSquare} />
-                </button>
+                    <FontAwesomeIcon 
+                    onClick={() => {
+                        actualizarProducto();
+                        setEdit(!edit)
+                        }
+                            } className='Products__table__confirm-button' icon={faCheckSquare} />
                 :
-                <button type="submit">
-                        <FontAwesomeIcon onClick={() => setEdit(!edit)} className='Products__table__edit' icon={faEdit} />
-                </button>
+                    <FontAwesomeIcon 
+                        onClick={() => setEdit(!edit) } className='Products__table__edit' icon={faEdit} />
                 }
-                <FontAwesomeIcon className='Products__table__remove' icon={faTrash} />
+                <FontAwesomeIcon 
+                    onClick={() => {
+                        eliminarProducto();
+                    }}
+                className='Products__table__remove' icon={faTrash} />
             </td>
         </tr>
     )
