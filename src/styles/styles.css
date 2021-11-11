@@ -64,15 +64,15 @@ body{
   70% {margin-left: -280%;}
 }
 
-.LoginLayout__mainContainer{
+.Login_Layout__mainContainer{
   display: flex;
   flex-direction: row;
   height: 100vh;
   overflow-y: hidden;
 }
 
-.LoginLayout__mainContainer > main{
-  height: 100vh;
+.Login_Layout__mainContainer > main{
+  height: 100%;
 }
 .a{
   width: 12.5%;
@@ -189,10 +189,11 @@ header {
 
 /*Register Page*/
 .Register__container{
+  height: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%
+  width:100%;
 }
 .Register_login__logo{
   top: 0;
@@ -218,6 +219,7 @@ header {
 }
 
 .Register__form{
+  background-color: #fff;
   box-shadow: darkgreen;
   border: 1px solid lightgray;
   box-shadow:4px 4px 10px gray ;
