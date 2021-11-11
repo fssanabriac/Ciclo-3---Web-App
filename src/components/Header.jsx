@@ -7,7 +7,7 @@ function Header(){
             <Link className='Header__logo' to='/'>
                 <Logo/>
             </Link>
-            <div >
+            <div className = 'log-container'>
                 <Link to='sign-in'>
                     <button className='Header__register-btn'>Registrarse</button>
                 </Link>

@@ -4,7 +4,7 @@ function Home(){
     return(
         <div className='Landing'>
             <div className='Landing__text'>
-                <h3>Libros, libros</h3>
+                <h3>Book Sales Management</h3>
             </div>
         </div>
     );

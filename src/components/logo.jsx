@@ -4,7 +4,7 @@ import { faBook} from '@fortawesome/free-solid-svg-icons';
 
 const Logo = () => {
     return (
-        <div>
+        <div className = 'logo'>
             <FontAwesomeIcon icon={faBook} />
             <span className='Header__Icon'>BooKing</span>
         </div>

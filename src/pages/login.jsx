@@ -4,9 +4,11 @@ import {Link} from 'react-router-dom'
 function Login(){
     return(
         <div className='Login__container'>
-            <Link to="/">
-                <Logo />
-            </Link>
+            <div className= 'Register_login_header'>
+                <Link className='Register_login__logo' to="/">
+                    <Logo />
+                </Link>
+            </div>
             <h2 className='login-title'>Inicia Sesión</h2>
             <form action="" className='Login__form'>
                 <div className='Login__inputs'>

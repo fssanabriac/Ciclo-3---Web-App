@@ -54,9 +54,10 @@ const Products = () => {
         <div className='h-full flex-col-j-start'>
             <div className='Products__title'>
                 {verTabla ? <h2>Lista de Productos</h2> : <h2>Crear nuevo producto</h2>} {/* Titulo del contexto */}
-                <button onClick={() => { setVerTabla(!verTabla); }} className='Products__title__button'>
-                    {textButton};
+                <button onClick={() => { setVerTabla(!verTabla) }} className='Products__title__button'>
+                    {textButton}
                 </button>
+                
             </div>
             <div className='abc'>
                 {verTabla ? <ListProducts lista={productos} /> : <UpdateProducts />}
