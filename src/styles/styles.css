@@ -15,12 +15,12 @@ body{
   height: 100vh;
   width: 100vw;
   overflow-y: hidden;
-  width:100%
 }
 
 .mainContainer > main {
   overflow-y: scroll;
   display: flex;
+
 }
 
 
@@ -189,12 +189,19 @@ header {
 
 /*Register Page*/
 .Register__container{
-  height: 95%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%;
+  overflow-y: hidden;
+  margin: 0%;
+  background-image: url('media/register.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  
 }
+
 .Register_login__logo{
   top: 0;
   align-items: center;
@@ -215,11 +222,11 @@ header {
   padding: 10px;
 }
 .register_title{
-  color:rgb(1, 1, 156);
+  color:rgb(255, 255, 255);
 }
 
 .Register__form{
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.712);
   box-shadow: darkgreen;
   border: 1px solid lightgray;
   box-shadow:4px 4px 10px gray ;
@@ -308,13 +315,19 @@ header {
 
 /*Login page*/
 .Login__container{
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%
+  overflow-y: hidden;
+  margin: 0%;
+  background-image: url('media/register.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .login-title{
-  color:rgb(1, 1, 156);
+  color:rgb(255, 255, 255);
 }
 
 .Login__form{
@@ -323,6 +336,7 @@ header {
   box-shadow:4px 4px 10px gray ;
   width: 30%;
   padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.788);
 }
 
 .Login__inputs{
