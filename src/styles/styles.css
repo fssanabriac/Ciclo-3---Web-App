@@ -18,9 +18,8 @@ body{
 }
 
 .mainContainer > main {
-  overflow-y: scroll;
+  overflow-y: hidden;
   display: flex;
-
 }
 
 
@@ -63,6 +62,8 @@ body{
   50% {margin-left: -280%;}
   70% {margin-left: -280%;}
 }
+
+
 
 .Login_Layout__mainContainer{
   display: flex;
