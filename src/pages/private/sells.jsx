@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { nanoid } from 'nanoid';
 
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
@@ -65,7 +66,7 @@ const Sells = () => {
     )
 }
 
-export default Sells
+export default Sells;
 
 const MostrarVentas = ({listaVentas}) =>{
     return <div className='Sells__container-table'>
@@ -112,55 +113,46 @@ const MostrarVentas = ({listaVentas}) =>{
 const ModificarVentas = () =>{
     const tags =[
         {
-            key:1,
             htmlForOption:"sellId",
             label: "Id de la venta",
             typeOption:"number"
         },
         {
-            key:2,
-            htmlForOption:"total",
-            label:"valor total",
-            typeOption:"number"
-        },
-        {
-            key:3,
             htmlForOption:"productId",
             label:"Id del producto",
             typeOption:"number"
         },
         {
-            key:4,
             htmlForOption:"quantity",
             label:"Cantidad",
             typeOption:"number"
         },
         {
-            key:5,
             htmlForOption:"unitPrice",
             label:"Valor unidad",
             typeOption:"number"
         },
         {
-            key:6,
+            htmlForOption:"total",
+            label:"Valor total",
+            typeOption:"number"
+        },
+        {
             htmlForOption:"sellDate",
             label:"Fecha de venta",
             typeOption:"date"
         },
         {
-            key:7,
             htmlForOption:"idBuyer",
             label:"Id del comprador",
             typeOption:"number"
         },
         {
-            key:8,
             htmlForOption:"nameBuyer",
             label:"Nombre del comprador",
             typeOption:"text"
         },
         {
-            key:9,
             htmlForOption:"nameSeller",
             label:"Nombre del vendedor",
             typeOption:"text"
@@ -177,7 +169,7 @@ const ModificarVentas = () =>{
                 <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {
                         if (producto==="Seleccione su producto"){
-                            return <option disabled key={producto} value={0}>{producto}</option> 
+                            return <option disabled key={nanoid} value={0}>{producto}</option> 
                         }else{
                             return <option key={producto}>{producto}</option>
                         }
@@ -186,7 +178,7 @@ const ModificarVentas = () =>{
             </label>
             {tags.map(
                 (tag)=>{
-                return <label className='Products__form__label' key={tag.key} htmlFor={tag.htmlForOption}>
+                return <label className='Products__form__label' key={nanoid} htmlFor={tag.htmlForOption}>
                     {tag.label}
                     <input name={tag.htmlForOption} type={tag.typeOption} />
                 </label>

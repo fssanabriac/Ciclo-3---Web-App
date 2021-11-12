@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from 'react'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, {useEffect, useState, useRef} from 'react'
+import { faCheckSquare, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { nanoid } from 'nanoid';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Users = () => {
     const usuarios = [
@@ -59,6 +62,8 @@ const Users = () => {
 }
 
 const ListaUsuarios = ({listaUsuarios}) => {
+    const [editUser, setEditUser] = useState(false);
+
     return <div className='Products__container-table'>
         <table>
             <thead>
@@ -78,8 +83,18 @@ const ListaUsuarios = ({listaUsuarios}) => {
                         <td>{usuario.rol}</td>
                         <td>{usuario.estado}</td>
                         <td className='Products__table__icons'>
-                            <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
-                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
+                            {editUser ?
+                                <FontAwesomeIcon
+                                    onClick={() => {
+                                        // actualizarUser();
+                                        setEditUser(!editUser)
+                                    }
+                            } className='Products__table__confirm-button' icon={faCheckSquare} />
+                                :
+                                <FontAwesomeIcon
+                                    onClick={() => setEditUser(!editUser)} className='Products__table__edit' icon={faEdit} />
+                            }
+                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash} />
                         </td>
                     </tr>
                 })}
@@ -92,38 +107,76 @@ const ListaUsuarios = ({listaUsuarios}) => {
 const ActualizarRol = () => {
     const usersTagAttributes = [
         {
-            key: 0,
-            htmlForOption: "nombreUsuario",
+            htmlForOption: "name",
             label:"Nombre",
             typeOption: "text",
         },
         {
-            key: -1,
-            htmlForOption: "idUsusario",
+            htmlForOption: "idNumber",
             label:"Identificación",
             typeOption: "text",
-        },
-        {
-            key: 1,
-            htmlForOption: "rol",
-            label:"Rol",
-            typeOption: "text",
-        },
-        {
-            key: 2,
-            htmlForOption: "estado",
-            label:"Estado",
-            typeOption: "text",
-        },
+        }
     ]
+
+    const formUser = useRef(null);
+    const submitUser = async (e) =>{
+       console.log('Submitting user form') 
+
+        e.preventDefault();
+        const datosFormulario = new FormData(formUser.current)
+        const nuevoUser = {}
+        datosFormulario.forEach((value, key)=>{
+            nuevoUser[key] = value
+            console.log('\t Here: ' + nuevoUser)
+        })
+
+        const options = {
+            method: 'POST',
+            url: 'http://localhost:5000/usuarios',
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                name: nuevoUser.name,
+                idNumber: nuevoUser.idNumber,
+                role:nuevoUser.role,
+                status:nuevoUser.status,
+            }
+          };
+          
+        await axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Usuario creado exitosamente.');
+            // setConsultarTabla(true);
+        }).catch(function (error) {
+            console.error(error);
+            toast.error('No se pudo crear el producto.');
+        });
+    }
+
     return <div>
-        <form className='Products__form'>
+        <form className='Products__form' ref={formUser} onSubmit={submitUser}>
             {usersTagAttributes.map((tag)=>{
-                return <label className='Products__form__label' key={tag.key} htmlFor={tag.htmlForOption}>
+                return <label className='Products__form__label' key={nanoid()} htmlFor={tag.htmlForOption}>
                     {tag.label}
                     <input name={tag.htmlForOption} type={tag.typeOption} />
                 </label>
             })}
+            <label className='Products__form__label' htmlFor="rol">
+                Rol
+                <select defaultValue={0} name="role" >
+                    <option disabled value={0}>Seleccione un rol</option>
+                    <option>Administrador</option>
+                    <option>Vendedor</option>
+                </select>
+            </label>
+            <label className='Products__form__label' htmlFor="estado">
+                Estado
+                <select defaultValue={0} name="status" >
+                    <option disabled value={0}>Seleccione un estado</option>
+                    <option>Pendiente</option>
+                    <option>No Autorizado</option>
+                    <option>Autorizado</option>
+                </select>
+            </label>
             <button className='Products__form__button' type="submit">Actualizar usuario</button>
         </form>
     </div>

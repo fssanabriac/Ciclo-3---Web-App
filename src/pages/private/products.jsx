@@ -116,10 +116,6 @@ const UpdateProducts = ({setConsultarTabla}) => {
     }
     return <div > 
         <form className='Products__form' ref={formRef} onSubmit={submitFormulario}> 
-            {/* <label className='Products__form__label' htmlFor="idProdutct"> */}
-                {/* Id del Producto */}
-                {/* <input name="idProduct" type="number" min={0} required/> */}
-            {/* </label> */}
             <label className='Products__form__label' htmlFor="description">
                 Descripción
                 <input name="description" type="text" />
