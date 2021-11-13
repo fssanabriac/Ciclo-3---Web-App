@@ -2,9 +2,14 @@
 import { Link } from 'react-router-dom'
 import Logo from 'components/logo'
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
+    const notify = () => {
+        toast("Usiuario registrado, pendiente por aprobación!");
+    }
     return (
         <div className='Register__container'>
             
@@ -28,9 +33,10 @@ const Register = () => {
                     </label>
                 </div>
                 <div>
-                    <Link to='/admin'>
-                        <button className='Register__submit' type='submit'>Registrar</button>
-                    </Link>
+                    {/* <Link to='/admin'> */}
+                        <button className='Register__submit' type='submit' onClick={notify}>Registrar</button>
+                        <ToastContainer />
+                    {/* </Link> */}
                 </div>
                 <div className='Register__login'>
                     <span>¿Ya tienes cuenta?</span> 

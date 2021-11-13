@@ -305,13 +305,19 @@ header {
 
 .Login__Google{
   width: 100%;
-  border:none;
-  color:rgb(58, 57, 57);
+  border-color: #318aac;
+  color:#fff;
   border-radius: 5px;
   height: 2rem;
-  background-color: lightgray;
+  background-color: #318aac;
   margin-top:1rem;
   margin-bottom:1rem;
+}
+.Login__Google:hover{
+  cursor: pointer;
+  background: #318aac;
+  color: #fff !important;
+  border-color: #318aac;
 }
 
 /*Login page*/
@@ -410,18 +416,6 @@ header {
 
 .Login__register__Link:hover{
   color: #0b2a3b;
-}
-
-
-.Login__Google{
-  width: 100%;
-  border:none;
-  color:rgb(58, 57, 57);
-  border-radius: 5px;
-  height: 2rem;
-  background-color: lightgray;
-  margin-top:1rem;
-  margin-bottom:1rem;
 }
 
 /*footer*/
