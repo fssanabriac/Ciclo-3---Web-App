@@ -7,7 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
-    const notify = () => toast("Wow so easy!");
+    const notify = () => {
+        toast("Usiuario registrado, pendiente por aprobación!");
+    }
     return (
         <div className='Register__container'>
             
@@ -31,10 +33,10 @@ const Register = () => {
                     </label>
                 </div>
                 <div>
-                    <Link to='/admin'>
+                    {/* <Link to='/admin'> */}
                         <button className='Register__submit' type='submit' onClick={notify}>Registrar</button>
                         <ToastContainer />
-                    </Link>
+                    {/* </Link> */}
                 </div>
                 <div className='Register__login'>
                     <span>¿Ya tienes cuenta?</span> 
