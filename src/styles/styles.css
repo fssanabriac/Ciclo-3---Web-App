@@ -613,6 +613,14 @@ table tr:hover{
   color: dimgray;
 }
 
+.Products__table__cancel-edit{
+  color:rgba(220, 20, 60, 0.438)
+}
+
+.Products__table__cancel-edit:hover{
+  color:crimson
+}
+
 .Products__table__confirm-button{
   color: rgba(0, 128, 0, 0.555);
 }
