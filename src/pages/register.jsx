@@ -23,8 +23,8 @@ const Register = () => {
                 <div className='Register__inputs'>
                         <input type="text" placeholder='Nombre' required />
                         <input type="text" placeholder='Apellidos' required />
-                        <input type="email" placeholder='Correo Electrónico' required />
-                        <input type="password" placeholder='Contraseña' required />
+                        <input type="email" name='email' placeholder='Correo Electrónico' required />
+                        <input type="password" name='password' placeholder='Contraseña' required />
                 </div>
                 <div className='notifications_check'>
                     <label htmlFor='Notifications_check'>
