@@ -2,9 +2,12 @@
 import { Link } from 'react-router-dom'
 import Logo from 'components/logo'
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
+    const notify = () => toast("Wow so easy!");
     return (
         <div className='Register__container'>
             
@@ -29,7 +32,8 @@ const Register = () => {
                 </div>
                 <div>
                     <Link to='/admin'>
-                        <button className='Register__submit' type='submit'>Registrar</button>
+                        <button className='Register__submit' type='submit' onClick={notify}>Registrar</button>
+                        <ToastContainer />
                     </Link>
                 </div>
                 <div className='Register__login'>
