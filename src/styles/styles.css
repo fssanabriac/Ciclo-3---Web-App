@@ -18,7 +18,7 @@ body{
 }
 
 .mainContainer > main {
-  overflow-y: hidden;
+  overflow-y: scroll;
   display: flex;
 }
 

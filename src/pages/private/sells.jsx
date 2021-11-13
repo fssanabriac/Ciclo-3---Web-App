@@ -66,7 +66,7 @@ const Sells = () => {
     )
 }
 
-export default Sells;
+export default Sells
 
 const MostrarVentas = ({listaVentas}) =>{
     return <div className='Sells__container-table'>
@@ -159,13 +159,14 @@ const ModificarVentas = () =>{
         },
     ]
     const productos =[
-        "Seleccione su producto", "Producto 1","Producto 2","Producto 3","Producto 4","Producto 5",
-        "Producto 6","Producto 7","Producto 8","Producto 9","Producto 10"
+        "Seleccione su producto", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
+        "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
     ]
 
     return <div>
         <form className='Products__form'>
-            <label htmlFor="productName">
+            <label htmlFor="productName" className='Products__form__label'>
+                Libro
                 <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {
                         if (producto==="Seleccione su producto"){
