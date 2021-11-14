@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { nanoid } from 'nanoid';
+import { useRef } from 'react/cjs/react.development';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
@@ -60,8 +63,9 @@ const Sells = () => {
                 </button>
             </div>
             <div className='abc'>
-                {verListaVentas ? <MostrarVentas listaVentas={ventas} /> : <ModificarVentas />}
+                {verListaVentas ? <MostrarVentas listaVentas={ventas} /> : <AgregarVenta />}
             </div>
+            <ToastContainer position="bottom-right" autoClose={5000}/>
         </div>
     )
 }
@@ -87,7 +91,7 @@ const MostrarVentas = ({listaVentas}) =>{
             </thead>
             <tbody>
                 {listaVentas.map((venta)=> {
-                    return <tr key={venta.idVenta}>
+                    return <tr key={nanoid()}>
                         <td>{venta.idVenta}</td>
                         <td>{venta.valorTotal}</td>
                         <td>{venta.idProducto}</td>
@@ -110,78 +114,133 @@ const MostrarVentas = ({listaVentas}) =>{
 
 }
 
-const ModificarVentas = () =>{
+const AgregarVenta = () =>{
     const tags =[
         {
-            htmlForOption:"sellId",
+            htmlForOption:"idSale",
             label: "Id de la venta",
-            typeOption:"number"
+            typeOption:"number",
+            // disabled:true
+            disabled:false
         },
         {
-            htmlForOption:"productId",
+            htmlForOption:"idProduct",
             label:"Id del producto",
-            typeOption:"number"
+            typeOption:"number",
+            // disabled:true
+            disabled:false
         },
         {
             htmlForOption:"quantity",
             label:"Cantidad",
-            typeOption:"number"
+            typeOption:"number",
+            disabled:false
         },
         {
-            htmlForOption:"unitPrice",
+            htmlForOption:"unitValue",
             label:"Valor unidad",
-            typeOption:"number"
+            typeOption:"number",
+            disabled:false
         },
         {
-            htmlForOption:"total",
+            htmlForOption:"totalValue",
             label:"Valor total",
-            typeOption:"number"
+            typeOption:"number",
+            disabled:false
         },
         {
-            htmlForOption:"sellDate",
+            htmlForOption:"date",
             label:"Fecha de venta",
-            typeOption:"date"
+            typeOption:"date",
+            disabled:false
         },
         {
             htmlForOption:"idBuyer",
             label:"Id del comprador",
-            typeOption:"number"
+            typeOption:"number",
+            // disabled:true
+            disabled:false
         },
         {
             htmlForOption:"nameBuyer",
             label:"Nombre del comprador",
-            typeOption:"text"
+            typeOption:"text",
+            disabled:false
         },
         {
             htmlForOption:"nameSeller",
             label:"Nombre del vendedor",
-            typeOption:"text"
+            typeOption:"text",
+            disabled:false
         },
     ]
     const productos =[
-        "Seleccione su producto", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
+        "Seleccione su libro", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
         "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
     ]
+    const formSales = useRef(null);
+    const submitSale = async (e) => {
+       console.log('Submitting sale form') 
+
+        e.preventDefault();
+        const datosFormulario = new FormData(formSales.current)
+        const nuevoSale = {}
+        datosFormulario.forEach((value, key)=>{
+            nuevoSale[key] = value
+            console.log('\t Here: ' + nuevoSale)
+        })
+
+        const options = {
+            method: 'POST',
+            url: 'http://localhost:5000/ventas',
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                idSale: nuevoSale.idSale,
+                idProduct: nuevoSale.idProduct,
+                quantity:nuevoSale.quantity,
+                unitValue:nuevoSale.unitValue,
+                totalValue: nuevoSale.totalValue,
+                date: nuevoSale.date,
+                idBuyer: nuevoSale.idBuyer,
+                nameBuyer: nuevoSale.nameBuyer,
+                nameSeller: nuevoSale.nameSeller
+            }
+          };
+          
+        await axios.request(options).then(function (response) {
+            console.log(response.data);
+            // setConsultarBackEnd(true);
+            toast.success('Venta creada exitosamente.');
+            // setConsultarTabla(true);
+        }).catch(function (error) {
+            console.error(error);
+            toast.error('No se pudo crear la venta.');
+        });
+    }
 
     return <div>
-        <form className='Products__form'>
+        <form 
+            ref={formSales}
+            onSubmit={submitSale}
+            className='Products__form'
+        >
             <label htmlFor="productName" className='Products__form__label'>
                 Libro
                 <select name="productName" defaultValue={0}>
                     {productos.map((producto) => {
-                        if (producto==="Seleccione su producto"){
-                            return <option disabled key={nanoid} value={0}>{producto}</option> 
+                        if (producto==="Seleccione su libro"){
+                            return <option disabled value={0} key={nanoid()} >{producto}</option> 
                         }else{
-                            return <option key={producto}>{producto}</option>
+                            return <option key={nanoid()}>{producto}</option>
                         }
                     })}
                 </select>
             </label>
             {tags.map(
                 (tag)=>{
-                return <label className='Products__form__label' key={nanoid} htmlFor={tag.htmlForOption}>
+                return <label className='Products__form__label' key={nanoid()} htmlFor={tag.htmlForOption}>
                     {tag.label}
-                    <input name={tag.htmlForOption} type={tag.typeOption} />
+                    <input disabled={tag.disabled} name={tag.htmlForOption} type={tag.typeOption} />
                 </label>
                 }
             )

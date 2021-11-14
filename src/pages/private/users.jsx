@@ -6,38 +6,6 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Users = () => {
-    // const usuarios = [
-    //     {
-    //         nombre:"Homer",
-    //         id:1,
-    //         rol:"Administrador",
-    //         estado:"Autorizado"
-    //     },
-    //     {
-    //         nombre:"Bart",
-    //         id:2,
-    //         rol:"Vendedor",
-    //         estado:"Pendiente"
-    //     },
-    //     {
-    //         nombre:"Marge",
-    //         id:3,
-    //         rol:"Administrador",
-    //         estado:"Autorizado"
-    //     },
-    //     {
-    //         nombre:"Lisa",
-    //         id:4,
-    //         rol:"Vendedor",
-    //         estado:"No Autorizado"
-    //     },
-    //     {
-    //         nombre:"Maggie",
-    //         id:5,
-    //         rol:"Administrador",
-    //         estado:"Pendiente"
-    //     },
-    // ]
     const [verListaUsuarios, setVerListaUsuarios] = useState(true);
     const [textoBotonUsuarios, setTextoBotonUsuarios] = useState('Actualizar rol de usuario')
     const [usuarios, setUsuarios] = useState([]);
