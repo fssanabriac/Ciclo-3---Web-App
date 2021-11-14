@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faEdit, faTimesCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { nanoid } from 'nanoid';
 import { useRef } from 'react/cjs/react.development';
@@ -9,41 +9,43 @@ import { toast, ToastContainer } from 'react-toastify';
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
     const [textoBoton, setTextoBoton] = useState('Registrar venta');
-    const ventas = [
-        {
-            idVenta:"1",
-            valorTotal:"20000",
-            idProducto:"1",
-            cantidad:"4",
-            valorUnidad:"5",
-            fecha:"10/10/2021",
-            idComprador:"123",
-            nombreComprador:"John Doe",
-            nombreVendedor:"Homer Simpson",
-        },
-        {
-            idVenta:"2",
-            valorTotal:"20000",
-            idProducto:"1",
-            cantidad:"4",
-            valorUnidad:"5",
-            fecha:"10/10/2021",
-            idComprador:"123",
-            nombreComprador:"John Doe",
-            nombreVendedor:"Homer Simpson",
-        },
-        {
-            idVenta:"3",
-            valorTotal:"20000",
-            idProducto:"1",
-            cantidad:"4",
-            valorUnidad:"5",
-            fecha:"10/10/2021",
-            idComprador:"123",
-            nombreComprador:"John Doe",
-            nombreVendedor:"Homer Simpson",
-        }
-    ]
+    const [ventas, setVentas] = useState([]);
+    const [consultarBackEnd, setConsultarBackEnd] = useState(true);
+    // const ventas = [
+    //     {
+    //         idVenta:"1",
+    //         valorTotal:"20000",
+    //         idProducto:"1",
+    //         cantidad:"4",
+    //         valorUnidad:"5",
+    //         fecha:"10/10/2021",
+    //         idComprador:"123",
+    //         nombreComprador:"John Doe",
+    //         nombreVendedor:"Homer Simpson",
+    //     },
+    //     {
+    //         idVenta:"2",
+    //         valorTotal:"20000",
+    //         idProducto:"1",
+    //         cantidad:"4",
+    //         valorUnidad:"5",
+    //         fecha:"10/10/2021",
+    //         idComprador:"123",
+    //         nombreComprador:"John Doe",
+    //         nombreVendedor:"Homer Simpson",
+    //     },
+    //     {
+    //         idVenta:"3",
+    //         valorTotal:"20000",
+    //         idProducto:"1",
+    //         cantidad:"4",
+    //         valorUnidad:"5",
+    //         fecha:"10/10/2021",
+    //         idComprador:"123",
+    //         nombreComprador:"John Doe",
+    //         nombreVendedor:"Homer Simpson",
+    //     }
+    // ]
 
     useEffect( (e) => {
         if (verListaVentas) {
@@ -53,6 +55,23 @@ const Sells = () => {
         }
     }, [verListaVentas]);
 
+    useEffect(() => {
+        const recibirDatosBackEnd = async () =>{
+            const options = { method: 'GET', url: 'http://localhost:5000/ventas' };
+
+            await axios.request(options).then(function (response) {
+                console.log(response.data);
+                setVentas(response.data)
+            }).catch(function (error) {
+                console.error(error);
+            });
+        }
+
+        if (consultarBackEnd){
+            recibirDatosBackEnd();
+            setConsultarBackEnd(false);
+        }
+    }, [consultarBackEnd])
     return (
         <div>
             <div className='Products__title'>
@@ -72,45 +91,222 @@ const Sells = () => {
 
 export default Sells
 
-const MostrarVentas = ({listaVentas}) =>{
+const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
     return <div className='Sells__container-table'>
         <table>
             <thead>
                 <tr>
                     <th>Id Venta</th>
-                    <th>Valor Total</th>
                     <th>Id Producto</th>
                     <th>Cantidad</th>
                     <th>Valor unidad</th>
+                    <th>Valor Total</th>
                     <th>Fecha de venta</th>
-                    <th>Id Comprador</th>
                     <th>Nombre Comprador</th>
+                    <th>Id Comprador</th>
                     <th>Nombre vendedor</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {listaVentas.map((venta)=> {
+                {listaVentas.map((venta) => {
+                    return <FilaVenta key={nanoid()} venta={venta} setConsultarBackEnd={setConsultarBackEnd} />
+                })
+                }
+                {/* {listaVentas.map((venta)=> {
                     return <tr key={nanoid()}>
-                        <td>{venta.idVenta}</td>
-                        <td>{venta.valorTotal}</td>
-                        <td>{venta.idProducto}</td>
-                        <td>{venta.cantidad}</td>
-                        <td>{venta.valorTotal}</td>
-                        <td>{venta.fecha}</td>
-                        <td>{venta.idComprador}</td>
-                        <td>{venta.nombreComprador}</td>
-                        <td>{venta.nombreVendedor}</td>
+                        <td>{venta.idSale}</td>
+                        <td>{venta.idSale}</td>
+                        <td>{venta.quantity}</td>
+                        <td>{venta.unitValue}</td>
+                        <td>{venta.totalValue}</td>
+                        <td>{venta.date}</td>
+                        <td>{venta.nameBuyer}</td>
+                        <td>{venta.idBuyer}</td>
+                        <td>{venta.nameSeller}</td>
                         <td className='Products__table__icons'>
                             <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
                             <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
                         </td>
                     </tr>
                 }
-                )}
+                )} */}
             </tbody>
         </table>
     </div>
+
+}
+
+const FilaVenta = ({venta, setConsultarBackEnd})=>{
+    const [infoNuevaVenta, setInfoNuevaVenta] = useState({
+        idSale : venta.idSale,
+        idProduct : venta.idProduct,
+        quantity : venta.quantity,
+        unitValue : venta.unitValue,
+        totalValue : venta.totalValue,
+        date : venta.date,
+        idBuyer : venta.idBuyer,
+        nameBuyer : venta.nameBuyer,
+        nameSeller : venta.nameSeller
+    });
+    const [editVenta, setEditVenta] = useState(false);
+    
+    useEffect(() => {
+        return console.log('Editando registro: ' + editVenta)
+    }, [editVenta])
+
+
+    const actualizarVenta = async () => {
+        console.log('Actualizando Venta: ' + infoNuevaVenta);
+        // enviar al BackEnd.
+
+        const options = {
+            method: 'PATCH',
+            url: `http://localhost:5000/ventas/${venta._id}`,
+            headers: {'Content-Type': 'application/json'},
+            data: {
+                ...infoNuevaVenta,
+                id : infoNuevaVenta._id,
+                idSale : infoNuevaVenta.idSale,
+                idProduct : infoNuevaVenta.idProduct,
+                quantity : infoNuevaVenta.quantity,
+                date : infoNuevaVenta.date,
+                idBuyer : infoNuevaVenta.idBuyer,
+                nameBuyer : infoNuevaVenta.nameBuyer,
+                nameSeller : infoNuevaVenta.nameSeller
+            }
+            // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
+          };
+          
+          await axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Venta actualizada con exito.')
+            setConsultarBackEnd(true);
+          }).catch(function (error) {
+            console.error(error);
+            toast.error('Venta no pudo ser actualizada.')
+          });
+    };
+
+
+    const eliminarVenta = async() =>{
+        const options = {
+            method: 'DELETE',
+            url: `http://localhost:5000/ventas/${venta._id}`,
+            headers: {'Content-Type': 'application/json'},
+            data:{...infoNuevaVenta, id: venta._id}
+          };
+          
+          axios.request(options).then(function (response) {
+            console.log(response.data);
+            toast.success('Venta eliminada exitosamente.')
+            setConsultarBackEnd(true);
+          }).catch(function (error) {
+            console.error(error);
+            toast.error('Error eliminando Venta.')
+          });
+    }
+
+    return <tr>
+        {editVenta ? 
+            <>
+                {/* <td>
+                    <select 
+                        defaultValue={0}
+                        name="state" 
+                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, state: e.target.value })}
+                    >
+                        <option disabled value={0}>Seleccione un estado</option>
+                        <option>En Proceso</option>
+                        <option>Cancelada</option>
+                        <option>Entregada</option>
+                    </select>
+                </td> */}
+                <td>
+                    {venta._id}
+                </td>
+                <td>
+                    {venta.idProduct}
+                </td>
+                <td>
+                    <input
+                        type="number"
+                        defaultValue={venta.quantity}
+                        onChange={(e) => setInfoNuevaVenta({ setInfoNuevaVenta, quantity: e.target.value })} 
+                    />
+                </td>
+                <td>
+                    <input
+                        type="number"
+                        defaultValue={venta.unitValue}
+                        onChange={(e) => setInfoNuevaVenta({ setInfoNuevaVenta, unitValue: e.target.value })} 
+                    />
+                </td>
+                <td>{infoNuevaVenta.quantity * infoNuevaVenta.unitValue}</td>
+                <td>
+                    <input
+                        type="date"
+                        defaultValue={venta.date}
+                        onChange={(e) => setInfoNuevaVenta({ setInfoNuevaVenta, date: e.target.value })} 
+                    />
+                </td>
+                <td>{venta.idBuyer}</td>
+                <td>
+                    <select 
+                        defaultValue={0}
+                        name="nameBuyer" 
+                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, nameBuyer: e.target.value })}
+                    >
+                        <option disabled value={0}>Seleccione un estado</option>
+                        <option>En Proceso</option>
+                        <option>Cancelada</option>
+                        <option>Entregada</option>
+                    </select>
+                </td>
+                <td>{venta.nameSeller}</td>
+                <td className='Products__table__icons'>
+                    <FontAwesomeIcon 
+                        onClick={() => {
+                            actualizarVenta();
+                            setEditVenta(!editVenta)
+                        }
+                            } className='Products__table__confirm-button' 
+                            icon={faCheckSquare} />
+                    <FontAwesomeIcon
+                        onClick={() => {
+                            setEditVenta(!editVenta)
+                        }} 
+                        className='Products__table__cancel-edit' 
+                        icon={faTimesCircle} 
+                    />
+            </td>
+            </>
+        :
+            <>
+                <td>{venta._id}</td>
+                <td>{venta.idProduct}</td>
+                <td>{venta.quantity}</td>
+                <td>{venta.unitValue}</td>
+                <td>{venta.totalValue}</td>
+                <td>{venta.date}</td>
+                <td>{venta.nameBuyer}</td>
+                <td>{venta.idBuyer}</td>
+                <td>{venta.nameSeller}</td>
+                <td className='Products__table__icons'>
+                    <FontAwesomeIcon
+                        onClick={() => setEditVenta(!editVenta)} 
+                        className='Products__table__edit' icon={faEdit} 
+                    />
+                    <FontAwesomeIcon 
+                        onClick={() => {
+                            eliminarVenta();
+                        }} 
+                        className='Products__table__remove' icon={faTrash}
+                    />
+                </td>
+            </>
+        }
+    </tr>
 
 }
 

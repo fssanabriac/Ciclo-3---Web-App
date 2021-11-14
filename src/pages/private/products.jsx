@@ -58,8 +58,26 @@ const Products = () => {
 }
 
 const ListProducts = ({lista, setConsultarTabla}) => {
+    const [busqueda, setBusqueda] = useState('');
+    const [productosFiltrados, setProductosFiltrados] = useState(lista);
+
+    useEffect(()=>{
+        // console.log('busqueda', busqueda);
+        // console.log('lista original: ', lista);
+        console.log('lista filtrada: ', 
+            setProductosFiltrados( lista.filter(
+                (elemento) => {
+                    // console.log('elemento: ', elemento)
+                    return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase()) }
+            )))
+    }, [busqueda, lista]);
     return <div className='Products__container-table'> 
 
+        <input 
+            placeholder='Buscar'
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+        />
         <form>
             <table >
                 <thead>
@@ -72,7 +90,7 @@ const ListProducts = ({lista, setConsultarTabla}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {lista.map((producto) => {
+                    {productosFiltrados.map((producto) => {
                         return <FilaProducto key={nanoid()} producto={producto} setConsultarTabla={setConsultarTabla}/>
                     })
                     }
