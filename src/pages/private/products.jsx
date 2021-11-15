@@ -177,28 +177,6 @@ const FilaProducto = ({producto, setConsultarBackEnd}) => {
                 toast.error('Producto no pudo ser actualizado.')
             }
         )
-    //     const options = {
-    //         method: 'PATCH',
-    //         url: `http://localhost:5000/productos/${producto._id}`,
-    //         headers: {'Content-Type': 'application/json'},
-    //         data: {
-    //             ...infoNuevoProducto,
-    //             id:infoNuevoProducto._id,
-    //             description:infoNuevoProducto.description,
-    //             price: infoNuevoProducto.price,
-    //             state: infoNuevoProducto.state
-    //         }
-    //         // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
-    //       };
-          
-    //       await axios.request(options).then(function (response) {
-    //         console.log(response.data);
-    //         toast.success('Producto actualizado con exito.')
-    //         setConsultarBackEnd(true);
-    //       }).catch(function (error) {
-    //         console.error(error);
-    //         toast.error('Producto no pudo ser actualizado.')
-    //       });
     };
 
         
@@ -215,21 +193,6 @@ const FilaProducto = ({producto, setConsultarBackEnd}) => {
                 toast.error('Error eliminando producto.');
             }
         )
-        // const options = {
-        //     method: 'DELETE',
-        //     url: `http://localhost:5000/productos/${producto._id}`,
-        //     headers: {'Content-Type': 'application/json'},
-        //     data:{...infoNuevoProducto, id:producto._id}
-        //   };
-          
-        //   axios.request(options).then(function (response) {
-        //     console.log(response.data);
-        //     toast.success('Producto eliminado exitosamente.')
-        //     setConsultarBackEnd(true);
-        //   }).catch(function (error) {
-        //     console.error(error);
-        //     toast.error('Error eliminando producto.')
-        //   });
     }
     useEffect(() => {
         return  console.log(edit)
