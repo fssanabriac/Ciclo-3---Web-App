@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { getUsuarios } from 'utils/api';
 
 const Users = () => {
     const [verListaUsuarios, setVerListaUsuarios] = useState(true);
@@ -23,21 +24,8 @@ const Users = () => {
     },[verListaUsuarios]);
 
     useEffect(() => {
-        
-        const recibirDatosBackEnd = async () =>{
-            const options = { method: 'GET', url: 'http://localhost:5000/usuarios' };
-
-            await axios.request(options).then(function (response) {
-                console.log(response.data);
-                setUsuarios(response.data)
-            }).catch(function (error) {
-                console.error(error);
-            });
-        }
-
         if (consultarBackEnd){
-            recibirDatosBackEnd();
-            setConsultarBackEnd(false);
+            getUsuarios(setUsuarios, setConsultarBackEnd);
         }
     }, [consultarBackEnd])
 

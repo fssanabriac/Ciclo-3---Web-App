@@ -5,47 +5,14 @@ import { nanoid } from 'nanoid';
 import { useRef } from 'react/cjs/react.development';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { getVentas } from 'utils/api';
 
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
     const [textoBoton, setTextoBoton] = useState('Registrar venta');
     const [ventas, setVentas] = useState([]);
     const [consultarBackEnd, setConsultarBackEnd] = useState(true);
-    // const ventas = [
-    //     {
-    //         idVenta:"1",
-    //         valorTotal:"20000",
-    //         idProducto:"1",
-    //         cantidad:"4",
-    //         valorUnidad:"5",
-    //         fecha:"10/10/2021",
-    //         idComprador:"123",
-    //         nombreComprador:"John Doe",
-    //         nombreVendedor:"Homer Simpson",
-    //     },
-    //     {
-    //         idVenta:"2",
-    //         valorTotal:"20000",
-    //         idProducto:"1",
-    //         cantidad:"4",
-    //         valorUnidad:"5",
-    //         fecha:"10/10/2021",
-    //         idComprador:"123",
-    //         nombreComprador:"John Doe",
-    //         nombreVendedor:"Homer Simpson",
-    //     },
-    //     {
-    //         idVenta:"3",
-    //         valorTotal:"20000",
-    //         idProducto:"1",
-    //         cantidad:"4",
-    //         valorUnidad:"5",
-    //         fecha:"10/10/2021",
-    //         idComprador:"123",
-    //         nombreComprador:"John Doe",
-    //         nombreVendedor:"Homer Simpson",
-    //     }
-    // ]
+    
 
     useEffect( (e) => {
         if (verListaVentas) {
@@ -56,20 +23,19 @@ const Sells = () => {
     }, [verListaVentas]);
 
     useEffect(() => {
-        const recibirDatosBackEnd = async () =>{
-            const options = { method: 'GET', url: 'http://localhost:5000/ventas' };
+        // const recibirDatosBackEnd = async () =>{
+        //     const options = { method: 'GET', url: 'http://localhost:5000/ventas' };
 
-            await axios.request(options).then(function (response) {
-                console.log(response.data);
-                setVentas(response.data)
-            }).catch(function (error) {
-                console.error(error);
-            });
-        }
+        //     await axios.request(options).then(function (response) {
+        //         console.log(response.data);
+        //         setVentas(response.data)
+        //     }).catch(function (error) {
+        //         console.error(error);
+        //     });
+        // }
 
         if (consultarBackEnd){
-            recibirDatosBackEnd();
-            setConsultarBackEnd(false);
+            getVentas(setVentas, setConsultarBackEnd);
         }
     }, [consultarBackEnd])
     return (

@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {nanoid} from 'nanoid'
 import axios from 'axios'
+import { getProductos } from 'utils/api';
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
@@ -14,20 +15,19 @@ const Products = () => {
     const [consultarTabla, setConsultarTabla] = useState(true);
 
     useEffect(() => {
-        const fromBackEnd = async () =>{
-        const options = { method: 'GET', url: 'http://localhost:5000/productos' };
+        // const getProductos = async () =>{
+        //     const options = { method: 'GET', url: 'http://localhost:5000/productos' };
 
-        axios.request(options).then(function (response) {
-            console.log(response.data);
-            setProductos(response.data)
-        }).catch(function (error) {
-            console.error(error);
-        });
-    };
+        //     axios.request(options).then(function (response) {
+        //         console.log(response.data);
+        //         setProductos(response.data)
+        //     }).catch(function (error) {
+        //         console.error(error);
+        //     });
+        // };
 
         if (consultarTabla){
-            fromBackEnd(); 
-            setConsultarTabla(false);
+            getProductos(setProductos, setConsultarTabla); 
         }
     }, [consultarTabla]);
 
@@ -62,14 +62,11 @@ const ListProducts = ({lista, setConsultarTabla}) => {
     const [productosFiltrados, setProductosFiltrados] = useState(lista);
 
     useEffect(()=>{
-        // console.log('busqueda', busqueda);
-        // console.log('lista original: ', lista);
-        console.log('lista filtrada: ', 
-            setProductosFiltrados( lista.filter(
-                (elemento) => {
-                    // console.log('elemento: ', elemento)
+        setProductosFiltrados(
+            lista.filter( (elemento) => {
                     return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase()) }
-            )))
+            )
+        )
     }, [busqueda, lista]);
     return <div className='Products__container-table'> 
 
