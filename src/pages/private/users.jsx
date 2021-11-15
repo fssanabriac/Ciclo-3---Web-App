@@ -6,6 +6,8 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { getUsuarios } from 'utils/api';
 import { postUsuario } from 'utils/api';
+import { patchUsuario } from 'utils/api';
+import { deleteUsuario } from 'utils/api';
 
 const Users = () => {
     const [verListaUsuarios, setVerListaUsuarios] = useState(true);
@@ -26,7 +28,15 @@ const Users = () => {
 
     useEffect(() => {
         if (consultarBackEnd){
-            getUsuarios(setUsuarios);
+            getUsuarios(
+                (response)=>{
+                    console.log(response.data);
+                    setUsuarios(response.data)
+                },
+                (error)=>{
+                    console.error(error);
+                }
+            );
             setConsultarBackEnd(false);
         }
     }, [consultarBackEnd])
@@ -90,48 +100,33 @@ const FilaUsuario = ({usuario, setConsultarBackEnd})=>{
         console.log(infoNuevoUsuario);
         // enviar al BackEnd.
 
-        const options = {
-            method: 'PATCH',
-            url: `http://localhost:5000/usuarios/${usuario._id}`,
-            headers: {'Content-Type': 'application/json'},
-            data: {
-                ...infoNuevoUsuario,
-                id : infoNuevoUsuario._id,
-                name : infoNuevoUsuario.name,
-                idNumber : infoNuevoUsuario.idNumber,
-                role : infoNuevoUsuario.role,
-                status : infoNuevoUsuario.status
+        patchUsuario( usuario._id, infoNuevoUsuario,
+            (response)=>{
+                console.log(response.data);
+                toast.success('Usuario actualizado con exito.')
+                setConsultarBackEnd(true);
+            },
+            (error)=>{
+                console.error(error);
+                toast.error('Usuario no pudo ser actualizado.')
             }
-            // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
-          };
-          
-          await axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success('Usuario actualizado con exito.')
-            setConsultarBackEnd(true);
-          }).catch(function (error) {
-            console.error(error);
-            toast.error('Usuario no pudo ser actualizado.')
-          });
+        );
     };
 
 
     const eliminarUsuario = async() =>{
-        const options = {
-            method: 'DELETE',
-            url: `http://localhost:5000/usuarios/${usuario._id}`,
-            headers: {'Content-Type': 'application/json'},
-            data:{...infoNuevoUsuario, id: usuario._id}
-          };
-          
-          axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success('Usuario eliminado exitosamente.')
-            setConsultarBackEnd(true);
-          }).catch(function (error) {
-            console.error(error);
-            toast.error('Error eliminando Usuario.')
-          });
+        deleteUsuario(
+            usuario._id,
+            (response)=>{
+                console.log(response.data);
+                toast.success('Usuario eliminado exitosamente.')
+                setConsultarBackEnd(true);
+            },
+            (error)=>{
+                console.error(error);
+                toast.error('Error eliminando Usuario.')
+            }
+        )
     }
 
     return <tr>
@@ -140,14 +135,14 @@ const FilaUsuario = ({usuario, setConsultarBackEnd})=>{
                 <td>
                     <input
                         type="text"
-                        defaultValue={usuario.nombre}
+                        defaultValue={usuario.name}
                         onChange={(e) => setInfoNuevoUsuario({ setInfoNuevoUsuario, name: e.target.value })} 
                     />
                 </td>
                 <td>
                     <input
                         type="text"
-                        defaultValue={usuario.id}
+                        defaultValue={usuario.idNumber}
                         onChange={(e) => setInfoNuevoUsuario({ ...infoNuevoUsuario, idNumber: e.target.value })} 
                     />
                 </td>
@@ -236,10 +231,25 @@ const ActualizarRol = ({setConsultarBackEnd}) => {
         const nuevoUser = {}
         datosFormulario.forEach((value, key)=>{
             nuevoUser[key] = value
-            console.log('\t Here: ' + nuevoUser)
         })
 
-        postUsuario(nuevoUser,setConsultarBackEnd);
+        await postUsuario(
+            {
+            name: nuevoUser.name,
+            idNumber: nuevoUser.idNumber,
+            role: nuevoUser.role,
+            status: nuevoUser.status,
+            },
+            (response)=>{
+                console.log(response.data);
+                toast.success('Usuario creado exitosamente.');
+                setConsultarBackEnd(true);
+            },
+            (error)=>{
+                console.error(error);
+                toast.error('No se pudo crear el usuario.');
+            }
+        );
     }
 
     return <div>
