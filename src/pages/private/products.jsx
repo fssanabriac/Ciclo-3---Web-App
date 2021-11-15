@@ -66,7 +66,10 @@ const ListProducts = ({lista, setConsultarBackEnd}) => {
         )
     }, [busqueda, lista]);
     return <div className='Products__container-table'> 
-
+        <select name="buscar_por">
+            <option value="Identificador">Identificador</option>
+            <option value="descripcion">Descripción</option>
+        </select>
         <input 
             placeholder='Buscar'
             value={busqueda}

@@ -17,6 +17,7 @@ const Sells = () => {
     const [consultarBackEnd, setConsultarBackEnd] = useState(true);
     const [usuarios, setUsuarios] = useState([]);
     const [productos, setProductos] = useState([]);
+    
 
     useEffect(() => {
        getProductos(setProductos, setConsultarBackEnd);
@@ -61,7 +62,18 @@ const Sells = () => {
 export default Sells
 
 const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
+    const [busqueda, setBusqueda] = useState('');
     return <div className='Sells__container-table'>
+        <select name="buscar_por">
+            <option value="Id Venta">Id Venta</option>
+            <option value="Id Comprador">Id Comprador</option>
+            <option value="Nombre Comprador">Nombre Comprador</option>
+        </select>
+        <input 
+            placeholder='Buscar'
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+        />
         <table>
             <thead>
                 <tr>

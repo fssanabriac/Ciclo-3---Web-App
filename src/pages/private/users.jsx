@@ -50,7 +50,6 @@ const Users = () => {
 
 const ListaUsuarios = ({usuariosBackEnd, setConsultarBackEnd}) => {
     const [editUser, setEditUser] = useState(false);
-
     return <div className='Products__container-table'>
         <table>
             <thead>
