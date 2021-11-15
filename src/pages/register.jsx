@@ -25,16 +25,22 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Your state values: \n 
+    toast("Usuario registrado, pendiente por aprobación!");
+    setTimeout(() => ""
+    , 1000);
+    /*alert(`Your state values: \n 
             Nombre: ${Nombre} \n
             Apellidos: ${Apellidos} \n
             email: ${email} \n 
             password: ${password} \n 
-            You can replace this alert with your process`);
+            You can replace this alert with your process`);*/
+  };
+  /*const goToHome = (event) =>{
+    setTimeout(() => console.log('Initial timeout!'), 1000);
   };
   const notify = () => {
     toast("Usiuario registrado, pendiente por aprobación!");
-  };
+  };*/
   return (
     <div className="Register__container">
       <div className="Register_login_header">
@@ -87,9 +93,8 @@ const Register = () => {
           <button
             className="Register__submit"
             type="submit"
-            onClick={notify}
-            disabled={!email || !password}
-            onSubmit={handleSubmit}
+            onClick={handleSubmit}
+            disabled={!Nombre || !Apellidos || !email || !password}
           >
             Registrar
           </button>

@@ -1,4 +1,4 @@
-import bookshelf from 'media/bookshelf.jpg'
+
 
 function Home(){
     return(
