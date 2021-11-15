@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const getProductos = async (setProductos, setConsultarTabla) =>{
+export const getProductos = async (setProductos, setConsultarBackEnd) =>{
     const options = { method: 'GET', url: 'http://localhost:5000/productos' };
 
     await axios
@@ -13,10 +13,10 @@ export const getProductos = async (setProductos, setConsultarTabla) =>{
         .catch(function (error) {
             console.error(error);
         });
-    setConsultarTabla(false);
+    setConsultarBackEnd(false);
 };
 
-export const postProducto = async (nuevoProducto, setConsultarTabla) =>{
+export const postProducto = async (nuevoProducto, setConsultarBackEnd) =>{
     const options = {
         method: 'POST',
         url: 'http://localhost:5000/productos',
@@ -31,7 +31,7 @@ export const postProducto = async (nuevoProducto, setConsultarTabla) =>{
     await axios.request(options).then(function (response) {
         console.log(response.data);
         toast.success('Producto creado exitosamente.');
-        setConsultarTabla(true);
+        setConsultarBackEnd(true);
     }).catch(function (error) {
         console.error(error);
         toast.error('No se pudo crear el producto.');

@@ -6,13 +6,22 @@ import { useRef } from 'react/cjs/react.development';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { getVentas } from 'utils/api';
+import { getProductos } from 'utils/api';
+import { getUsuarios } from 'utils/api';
+import useIsActiveNavbar from 'hooks/useIsActiveNavbar';
 
 const Sells = () => {
     const [verListaVentas, setVerListaVentas] = useState(true);
     const [textoBoton, setTextoBoton] = useState('Registrar venta');
     const [ventas, setVentas] = useState([]);
     const [consultarBackEnd, setConsultarBackEnd] = useState(true);
-    
+    const [usuarios, setUsuarios] = useState([]);
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+       getProductos(setProductos, setConsultarBackEnd);
+       getUsuarios(setUsuarios, setConsultarBackEnd);
+    }, [])
 
     useEffect( (e) => {
         if (verListaVentas) {
@@ -23,21 +32,11 @@ const Sells = () => {
     }, [verListaVentas]);
 
     useEffect(() => {
-        // const recibirDatosBackEnd = async () =>{
-        //     const options = { method: 'GET', url: 'http://localhost:5000/ventas' };
-
-        //     await axios.request(options).then(function (response) {
-        //         console.log(response.data);
-        //         setVentas(response.data)
-        //     }).catch(function (error) {
-        //         console.error(error);
-        //     });
-        // }
-
         if (consultarBackEnd){
             getVentas(setVentas, setConsultarBackEnd);
         }
     }, [consultarBackEnd])
+
     return (
         <div>
             <div className='Products__title'>
@@ -48,7 +47,10 @@ const Sells = () => {
                 </button>
             </div>
             <div className='abc'>
-                {verListaVentas ? <MostrarVentas listaVentas={ventas} /> : <AgregarVenta />}
+                {verListaVentas ? 
+                    <MostrarVentas listaVentas={ventas} />
+                : 
+                    <AgregarVenta productos={productos} usuarios={usuarios}/>}
             </div>
             <ToastContainer position="bottom-right" autoClose={5000}/>
         </div>
@@ -79,24 +81,7 @@ const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
                     return <FilaVenta key={nanoid()} venta={venta} setConsultarBackEnd={setConsultarBackEnd} />
                 })
                 }
-                {/* {listaVentas.map((venta)=> {
-                    return <tr key={nanoid()}>
-                        <td>{venta.idSale}</td>
-                        <td>{venta.idSale}</td>
-                        <td>{venta.quantity}</td>
-                        <td>{venta.unitValue}</td>
-                        <td>{venta.totalValue}</td>
-                        <td>{venta.date}</td>
-                        <td>{venta.nameBuyer}</td>
-                        <td>{venta.idBuyer}</td>
-                        <td>{venta.nameSeller}</td>
-                        <td className='Products__table__icons'>
-                            <FontAwesomeIcon className='Products__table__edit'icon={faEdit}/>
-                            <FontAwesomeIcon className='Products__table__remove' icon={faTrash}/>
-                        </td>
-                    </tr>
-                }
-                )} */}
+                
             </tbody>
         </table>
     </div>
@@ -276,7 +261,7 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
 
 }
 
-const AgregarVenta = () =>{
+const AgregarVenta = ({productos, usuarios}) =>{
     const tags =[
         {
             htmlForOption:"idSale",
@@ -336,10 +321,10 @@ const AgregarVenta = () =>{
             disabled:false
         },
     ]
-    const productos =[
-        "Seleccione su libro", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
-        "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
-    ]
+    // const productos =[
+    //     "Seleccione su libro", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
+    //     "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
+    // ]
     const formSales = useRef(null);
     const submitSale = async (e) => {
        console.log('Submitting sale form') 
@@ -389,12 +374,18 @@ const AgregarVenta = () =>{
             <label htmlFor="productName" className='Products__form__label'>
                 Libro
                 <select name="productName" defaultValue={0}>
+                    <option disabled value={0} >Seleccione el Libro </option>
                     {productos.map((producto) => {
-                        if (producto==="Seleccione su libro"){
-                            return <option disabled value={0} key={nanoid()} >{producto}</option> 
-                        }else{
-                            return <option key={nanoid()}>{producto}</option>
-                        }
+                            return <option key={nanoid()}>{producto.description}</option>
+                    })}
+                </select>
+            </label>
+            <label htmlFor="sellerName" className='Products__form__label'>
+                Vendedor
+                <select name="sellerName" defaultValue={0}>
+                    <option disabled value={0} >Seleccione el vendedor </option>
+                    {usuarios.map((usuario) => {
+                            return <option key={nanoid()}>{usuario.name}</option>
                     })}
                 </select>
             </label>

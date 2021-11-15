@@ -13,20 +13,20 @@ const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
     const [textButton, setTextButton] = useState('Crear Producto');
     const [productos, setProductos] = useState([]); // Recibe la lista de productos del backend
-    const [consultarTabla, setConsultarTabla] = useState(true);
+    const [consultarBackEnd, setConsultarBackEnd] = useState(true);
 
     useEffect(() => {
-        if (consultarTabla){
-            getProductos(setProductos, setConsultarTabla); 
+        if (consultarBackEnd){
+            getProductos(setProductos, setConsultarBackEnd); 
         }
-    }, [consultarTabla]);
+    }, [consultarBackEnd]);
 
     useEffect( (e) =>{
         if (verTabla){
             setTextButton('Crear Producto');
         }else{
             setTextButton('Ver Lista de Productos');
-            setConsultarTabla(true);
+            setConsultarBackEnd(true);
         }
     },[verTabla]) // cambia el texto del boton cada que verTabla es modificado
 
@@ -40,14 +40,14 @@ const Products = () => {
                 
             </div>
             <div className='abc'>
-                {verTabla ? <ListProducts lista={productos} setConsultarTabla={setConsultarTabla}/> : <UpdateProducts setConsultarTabla={setConsultarTabla}/>}
+                {verTabla ? <ListProducts lista={productos} setConsultarBackEnd={setConsultarBackEnd}/> : <UpdateProducts setConsultarBackEnd={setConsultarBackEnd}/>}
             </div>
             <ToastContainer position="bottom-right" autoClose={5000}/>
         </div>
     );
 }
 
-const ListProducts = ({lista, setConsultarTabla}) => {
+const ListProducts = ({lista, setConsultarBackEnd}) => {
     const [busqueda, setBusqueda] = useState('');
     const [productosFiltrados, setProductosFiltrados] = useState(lista);
 
@@ -78,7 +78,7 @@ const ListProducts = ({lista, setConsultarTabla}) => {
                 </thead>
                 <tbody>
                     {productosFiltrados.map((producto) => {
-                        return <FilaProducto key={nanoid()} producto={producto} setConsultarTabla={setConsultarTabla}/>
+                        return <FilaProducto key={nanoid()} producto={producto} setConsultarBackEnd={setConsultarBackEnd}/>
                     })
                     }
                 </tbody>
@@ -88,7 +88,7 @@ const ListProducts = ({lista, setConsultarTabla}) => {
 };
 
 
-const UpdateProducts = ({setConsultarTabla}) => {
+const UpdateProducts = ({setConsultarBackEnd}) => {
 
     const formRef = useRef(null);
     const submitFormulario = (e) =>{
@@ -100,7 +100,7 @@ const UpdateProducts = ({setConsultarTabla}) => {
             console.log('\t Here: ' + nuevoProducto)
         })
         console.log('submited', datosFormulario)
-        postProducto(nuevoProducto, setConsultarTabla);
+        postProducto(nuevoProducto, setConsultarBackEnd);
     }
     return <div > 
         <form className='Products__form' ref={formRef} onSubmit={submitFormulario}> 
@@ -126,7 +126,7 @@ const UpdateProducts = ({setConsultarTabla}) => {
       </div>
 };
 
-const FilaProducto = ({producto, setConsultarTabla}) => {
+const FilaProducto = ({producto, setConsultarBackEnd}) => {
     const [edit, setEdit] = useState(false);
     const [infoNuevoProducto, setInfoNuevoProducto] = useState({
         description : producto.description,
@@ -156,7 +156,7 @@ const FilaProducto = ({producto, setConsultarTabla}) => {
           await axios.request(options).then(function (response) {
             console.log(response.data);
             toast.success('Producto actualizado con exito.')
-            setConsultarTabla(true);
+            setConsultarBackEnd(true);
           }).catch(function (error) {
             console.error(error);
             toast.error('Producto no pudo ser actualizado.')
@@ -174,7 +174,7 @@ const FilaProducto = ({producto, setConsultarTabla}) => {
           axios.request(options).then(function (response) {
             console.log(response.data);
             toast.success('Producto eliminado exitosamente.')
-            setConsultarTabla(true);
+            setConsultarBackEnd(true);
           }).catch(function (error) {
             console.error(error);
             toast.error('Error eliminando producto.')
