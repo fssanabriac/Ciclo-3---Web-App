@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { getUsuarios } from 'utils/api';
+import { postUsuario } from 'utils/api';
 
 const Users = () => {
     const [verListaUsuarios, setVerListaUsuarios] = useState(true);
@@ -237,27 +238,28 @@ const ActualizarRol = ({setConsultarBackEnd}) => {
             console.log('\t Here: ' + nuevoUser)
         })
 
-        const options = {
-            method: 'POST',
-            url: 'http://localhost:5000/usuarios',
-            headers: {'Content-Type': 'application/json'},
-            data: {
-                name: nuevoUser.name,
-                idNumber: nuevoUser.idNumber,
-                role:nuevoUser.role,
-                status:nuevoUser.status,
-            }
-          };
+        postUsuario(nuevoUser,setConsultarBackEnd);
+        // const options = {
+        //     method: 'POST',
+        //     url: 'http://localhost:5000/usuarios',
+        //     headers: {'Content-Type': 'application/json'},
+        //     data: {
+        //         name: nuevoUser.name,
+        //         idNumber: nuevoUser.idNumber,
+        //         role:nuevoUser.role,
+        //         status:nuevoUser.status,
+        //     }
+        //   };
           
-        await axios.request(options).then(function (response) {
-            console.log(response.data);
-            setConsultarBackEnd(true);
-            toast.success('Usuario creado exitosamente.');
-            // setConsultarTabla(true);
-        }).catch(function (error) {
-            console.error(error);
-            toast.error('No se pudo crear el producto.');
-        });
+        // await axios.request(options).then(function (response) {
+        //     console.log(response.data);
+        //     setConsultarBackEnd(true);
+        //     toast.success('Usuario creado exitosamente.');
+        //     // setConsultarTabla(true);
+        // }).catch(function (error) {
+        //     console.error(error);
+        //     toast.error('No se pudo crear el producto.');
+        // });
     }
 
     return <div>

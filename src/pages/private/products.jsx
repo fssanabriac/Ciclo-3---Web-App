@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {nanoid} from 'nanoid'
 import axios from 'axios'
 import { getProductos } from 'utils/api';
+import { postProducto } from 'utils/api';
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
@@ -15,17 +16,6 @@ const Products = () => {
     const [consultarTabla, setConsultarTabla] = useState(true);
 
     useEffect(() => {
-        // const getProductos = async () =>{
-        //     const options = { method: 'GET', url: 'http://localhost:5000/productos' };
-
-        //     axios.request(options).then(function (response) {
-        //         console.log(response.data);
-        //         setProductos(response.data)
-        //     }).catch(function (error) {
-        //         console.error(error);
-        //     });
-        // };
-
         if (consultarTabla){
             getProductos(setProductos, setConsultarTabla); 
         }
@@ -101,8 +91,8 @@ const ListProducts = ({lista, setConsultarTabla}) => {
 const UpdateProducts = ({setConsultarTabla}) => {
 
     const formRef = useRef(null);
-    const submitFormulario = async (e) =>{
-        // e.preventDefault();
+    const submitFormulario = (e) =>{
+        e.preventDefault();
         const datosFormulario = new FormData(formRef.current)
         const nuevoProducto = {}
         datosFormulario.forEach((value, key)=>{
@@ -110,24 +100,7 @@ const UpdateProducts = ({setConsultarTabla}) => {
             console.log('\t Here: ' + nuevoProducto)
         })
         console.log('submited', datosFormulario)
-        const options = {
-            method: 'POST',
-            url: 'http://localhost:5000/productos',
-            headers: {'Content-Type': 'application/json'},
-            data: {
-                description: nuevoProducto.description,
-                state: nuevoProducto.state,
-                price:nuevoProducto.price}
-          };
-          
-        await axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success('Producto creado exitosamente.');
-            setConsultarTabla(true);
-        }).catch(function (error) {
-            console.error(error);
-            toast.error('No se pudo crear el producto.');
-        });
+        postProducto(nuevoProducto, setConsultarTabla);
     }
     return <div > 
         <form className='Products__form' ref={formRef} onSubmit={submitFormulario}> 
