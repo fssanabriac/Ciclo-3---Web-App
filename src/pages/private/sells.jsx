@@ -19,8 +19,30 @@ const Sells = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-       getProductos(setProductos, setConsultarBackEnd);
-       getUsuarios(setUsuarios, setConsultarBackEnd);
+        const fetchUsers = async()=>{
+            await getUsuarios(
+                (response)=>{
+                    setUsuarios(response.data);
+                },
+                (error)=>{
+                    console.error(error);
+                }
+            )
+        };
+
+        const fetchProducts = async ()=>{
+            await getProductos(
+                (response)=>{
+                    setProductos(response.data);
+                },
+                (error)=>{
+                    console.error(error);
+                }
+            )
+        };
+
+       fetchUsers();
+       fetchProducts();
     }, [])
 
     useEffect( (e) => {
@@ -49,7 +71,7 @@ const Sells = () => {
             </div>
             <div className='abc'>
                 {verListaVentas ? 
-                    <MostrarVentas listaVentas={ventas} />
+                    <MostrarVentas listaVentas={ventas} usuarios={usuarios} productos={productos} setConsultarBackEnd={setConsultarBackEnd}/>
                 : 
                     <AgregarVenta productos={productos} usuarios={usuarios}/>}
             </div>
@@ -60,7 +82,7 @@ const Sells = () => {
 
 export default Sells
 
-const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
+const MostrarVentas = ({listaVentas,usuarios,productos, setConsultarBackEnd}) =>{
     return <div className='Sells__container-table'>
         <table>
             <thead>
@@ -79,7 +101,7 @@ const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
             </thead>
             <tbody>
                 {listaVentas.map((venta) => {
-                    return <FilaVenta key={nanoid()} venta={venta} setConsultarBackEnd={setConsultarBackEnd} />
+                    return <FilaVenta key={nanoid()} venta={venta} usuarios={usuarios} productos={productos} setConsultarBackEnd={setConsultarBackEnd} />
                 })
                 }
                 
@@ -89,7 +111,9 @@ const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
 
 }
 
-const FilaVenta = ({venta, setConsultarBackEnd})=>{
+const FilaVenta = ({venta, usuarios, productos, setConsultarBackEnd})=>{
+    const [editVenta, setEditVenta] = useState(false);
+
     const [infoNuevaVenta, setInfoNuevaVenta] = useState({
         idSale : venta.idSale,
         idProduct : venta.idProduct,
@@ -101,7 +125,6 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
         nameBuyer : venta.nameBuyer,
         nameSeller : venta.nameSeller
     });
-    const [editVenta, setEditVenta] = useState(false);
     
     useEffect(() => {
         return console.log('Editando registro: ' + editVenta)
@@ -130,11 +153,11 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
             // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
           };
           
-          await axios.request(options).then(function (response) {
+          await axios.request(options).then((response)=> {
             console.log(response.data);
             toast.success('Venta actualizada con exito.')
             setConsultarBackEnd(true);
-          }).catch(function (error) {
+          }).catch((error)=> {
             console.error(error);
             toast.error('Venta no pudo ser actualizada.')
           });
@@ -178,7 +201,12 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                     {venta._id}
                 </td>
                 <td>
-                    {venta.idProduct}
+                    <select name="idProduct" defaultValue={0}>
+                        <option value={0}>Seleccione un libro</option>
+                        {productos.map((p)=>{
+                            return <option key={nanoid()}>{p.description}</option>
+                        })}
+                    </select>
                 </td>
                 <td>
                     <input
@@ -194,7 +222,8 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                         onChange={(e) => setInfoNuevaVenta({ setInfoNuevaVenta, unitValue: e.target.value })} 
                     />
                 </td>
-                <td>{infoNuevaVenta.quantity * infoNuevaVenta.unitValue}</td>
+                <td>
+                    <input type="text" defaultValue={infoNuevaVenta.quantity * infoNuevaVenta.unitValue}/></td>
                 <td>
                     <input
                         type="date"
@@ -204,18 +233,22 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                 </td>
                 <td>{venta.idBuyer}</td>
                 <td>
+                    {venta.nameSeller}
+                </td>
+                <td>
                     <select 
                         defaultValue={0}
-                        name="nameBuyer" 
-                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, nameBuyer: e.target.value })}
+                        name="nameSeller" 
+                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, nameSeller: e.target.value })}
                     >
-                        <option disabled value={0}>Seleccione un estado</option>
-                        <option>En Proceso</option>
-                        <option>Cancelada</option>
-                        <option>Entregada</option>
+                        <option disabled value={0}>Seleccione un vendedor</option>
+                        {usuarios.map((u)=>{
+                            return <option key={nanoid()}>{u.name}</option>
+                        })
+                        }
+                       
                     </select>
                 </td>
-                <td>{venta.nameSeller}</td>
                 <td className='Products__table__icons'>
                     <FontAwesomeIcon 
                         onClick={() => {
