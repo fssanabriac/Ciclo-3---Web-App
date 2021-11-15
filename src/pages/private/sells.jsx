@@ -235,7 +235,7 @@ const FilaVenta = ({venta, usuarios, productos, setConsultarBackEnd})=>{
                     />
                 </td>
                 <td>
-                    <input type="text" defaultValue={infoNuevaVenta.quantity * infoNuevaVenta.unitValue}/></td>
+                    <input type="text" name='quantity' defaultValue={infoNuevaVenta.quantity * infoNuevaVenta.unitValue}/></td>
                 <td>
                     <input
                         type="date"
@@ -309,13 +309,12 @@ const FilaVenta = ({venta, usuarios, productos, setConsultarBackEnd})=>{
 
 const AgregarVenta = ({productos, usuarios}) =>{
     const tags =[
-        {
-            htmlForOption:"idSale",
-            label: "Id de la venta",
-            typeOption:"number",
-            // disabled:true
-            disabled:false
-        },
+        // {
+        //     htmlForOption:"idSale",
+        //     label: "Id de la venta",
+        //     typeOption:"number",
+        //     disabled:true
+        // },
         {
             htmlForOption:"idProduct",
             label:"Id del producto",
@@ -359,18 +358,9 @@ const AgregarVenta = ({productos, usuarios}) =>{
             label:"Nombre del comprador",
             typeOption:"text",
             disabled:false
-        },
-        {
-            htmlForOption:"nameSeller",
-            label:"Nombre del vendedor",
-            typeOption:"text",
-            disabled:false
-        },
+        }
     ]
-    // const productos =[
-    //     "Seleccione su libro", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
-    //     "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
-    // ]
+
     const formSales = useRef(null);
     const submitSale = async (e) => {
        console.log('Submitting sale form') 
@@ -388,7 +378,7 @@ const AgregarVenta = ({productos, usuarios}) =>{
             url: 'http://localhost:5000/ventas',
             headers: {'Content-Type': 'application/json'},
             data: {
-                idSale: nuevoSale.idSale,
+                idSale: nuevoSale._id,
                 idProduct: nuevoSale.idProduct,
                 quantity:nuevoSale.quantity,
                 unitValue:nuevoSale.unitValue,
@@ -419,16 +409,16 @@ const AgregarVenta = ({productos, usuarios}) =>{
         >
             <label htmlFor="productName" className='Products__form__label'>
                 Libro
-                <select name="productName" defaultValue={0}>
-                    <option disabled value={0} >Seleccione el Libro </option>
+                <select name="productName" defaultValue={-1}>
+                    <option disabled value={-1} >Seleccione el Libro </option>
                     {productos.map((producto) => {
                             return <option key={nanoid()}>{producto.description}</option>
                     })}
                 </select>
-            </label>
-            <label htmlFor="sellerName" className='Products__form__label'>
+            </label> 
+            <label htmlFor="nameSeller" className='Products__form__label'>
                 Vendedor
-                <select name="sellerName" defaultValue={0}>
+                <select name="nameSeller" defaultValue={0}>
                     <option disabled value={0} >Seleccione el vendedor </option>
                     {usuarios.map((usuario) => {
                             return <option key={nanoid()}>{usuario.name}</option>
