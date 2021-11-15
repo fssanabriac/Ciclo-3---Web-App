@@ -1,45 +1,49 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const getProductos = async (setProductos, setConsultarBackEnd) =>{
+export const getProductos = async (succesCallback, errorCallback) =>{
     const options = { method: 'GET', url: 'http://localhost:5000/productos' };
 
     await axios
         .request(options)
-        .then(function (response) {
-            console.log(response.data);
-            setProductos(response.data)
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
-    setConsultarBackEnd(false);
+        .then(succesCallback)
+        .catch(errorCallback);
 };
 
-export const postProducto = async (nuevoProducto, setConsultarBackEnd) =>{
+export const postProducto = (data, succesCallback, errorCallback) =>{
     const options = {
         method: 'POST',
         url: 'http://localhost:5000/productos',
         headers: { 'Content-Type': 'application/json' },
-        data: {
-            description: nuevoProducto.description,
-            state: nuevoProducto.state,
-            price: nuevoProducto.price
-        }
+        data
     };
 
-    await axios.request(options).then(function (response) {
-        console.log(response.data);
-        toast.success('Producto creado exitosamente.');
-        setConsultarBackEnd(true);
-    }).catch(function (error) {
-        console.error(error);
-        toast.error('No se pudo crear el producto.');
-    });
+    axios.request(options).then( succesCallback).catch(errorCallback);
 
 };
 
-export const getUsuarios = async (setUsuarios, setConsultarBackEnd) =>{
+export const editarProducto = async (id, data, succesCallback, errorCallback)=>{
+    const options = {
+            method: 'PATCH',
+            url: `http://localhost:5000/productos/${id}`,
+            headers: {'Content-Type': 'application/json'},
+            data
+        }
+
+    await axios.request(options).then( succesCallback).catch(errorCallback);
+}
+
+export const eliminarProducto = async (id, succesCallback, errorCallback)=>{
+    const options = {
+            method: 'DELETE',
+            url: `http://localhost:5000/productos/${id}/`,
+            headers: {'Content-Type': 'application/json'},
+            // data{...infoNuevoProducto, id:producto._id}
+          };
+
+    await axios.request(options).then( succesCallback).catch(errorCallback);
+}
+export const getUsuarios = async (setUsuarios) =>{
     const options = { method: 'GET', url: 'http://localhost:5000/usuarios' };
 
     await axios
@@ -50,7 +54,6 @@ export const getUsuarios = async (setUsuarios, setConsultarBackEnd) =>{
         }).catch(function (error) {
             console.error(error);
         });
-    setConsultarBackEnd(false);
 }
 
 export const postUsuario = async (nuevoUser,setConsultarBackEnd) => {
@@ -80,7 +83,7 @@ export const postUsuario = async (nuevoUser,setConsultarBackEnd) => {
         });
 };
 
-export const getVentas = async (setVentas, setConsultarBackEnd) =>{
+export const getVentas = async (setVentas) =>{
     const options = { method: 'GET', url: 'http://localhost:5000/ventas' };
 
     await axios
@@ -91,5 +94,4 @@ export const getVentas = async (setVentas, setConsultarBackEnd) =>{
         }).catch(function (error) {
             console.error(error);
         });
-    setConsultarBackEnd(false);
 };

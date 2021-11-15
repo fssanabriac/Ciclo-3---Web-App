@@ -5,9 +5,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {nanoid} from 'nanoid'
-import axios from 'axios'
-import { getProductos } from 'utils/api';
-import { postProducto } from 'utils/api';
+import { getProductos, postProducto, editarProducto, eliminarProducto } from 'utils/api';
 
 const Products = () => {
     const [verTabla, setVerTabla] = useState(true);
@@ -17,7 +15,16 @@ const Products = () => {
 
     useEffect(() => {
         if (consultarBackEnd){
-            getProductos(setProductos, setConsultarBackEnd); 
+            getProductos(
+                (response) => {
+                    console.log(response.data);
+                    setProductos(response.data)
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+            setConsultarBackEnd(false);
         }
     }, [consultarBackEnd]);
 
@@ -91,7 +98,7 @@ const ListProducts = ({lista, setConsultarBackEnd}) => {
 const UpdateProducts = ({setConsultarBackEnd}) => {
 
     const formRef = useRef(null);
-    const submitFormulario = (e) =>{
+    const submitFormulario = async (e) =>{
         e.preventDefault();
         const datosFormulario = new FormData(formRef.current)
         const nuevoProducto = {}
@@ -100,7 +107,23 @@ const UpdateProducts = ({setConsultarBackEnd}) => {
             console.log('\t Here: ' + nuevoProducto)
         })
         console.log('submited', datosFormulario)
-        postProducto(nuevoProducto, setConsultarBackEnd);
+        await postProducto(
+
+            {description: nuevoProducto.description,
+            state: nuevoProducto.state,
+            price: nuevoProducto.price },
+
+            (response)=> {
+                console.log(response.data);
+                toast.success('Producto creado exitosamente.');
+                setConsultarBackEnd(true);
+            },
+
+            (error) => {
+                console.error(error);
+                toast.error('No se pudo crear el producto.');
+            }
+        )
     }
     return <div > 
         <form className='Products__form' ref={formRef} onSubmit={submitFormulario}> 
@@ -139,46 +162,71 @@ const FilaProducto = ({producto, setConsultarBackEnd}) => {
         console.log(infoNuevoProducto);
         // enviar al BackEnd.
 
-        const options = {
-            method: 'PATCH',
-            url: `http://localhost:5000/productos/${producto._id}`,
-            headers: {'Content-Type': 'application/json'},
-            data: {
-                ...infoNuevoProducto,
-                id:infoNuevoProducto._id,
-                description:infoNuevoProducto.description,
-                price: infoNuevoProducto.price,
-                state: infoNuevoProducto.state
+        await editarProducto(producto._id, infoNuevoProducto, 
+            (response)=> {
+                console.log(response.data);
+                toast.success('Producto actualizado con exito.')
+                setEdit(!edit);
+                setConsultarBackEnd(true);
+            },
+            (error)=> {
+                console.error(error);
+                toast.error('Producto no pudo ser actualizado.')
             }
-            // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
-          };
+        )
+    //     const options = {
+    //         method: 'PATCH',
+    //         url: `http://localhost:5000/productos/${producto._id}`,
+    //         headers: {'Content-Type': 'application/json'},
+    //         data: {
+    //             ...infoNuevoProducto,
+    //             id:infoNuevoProducto._id,
+    //             description:infoNuevoProducto.description,
+    //             price: infoNuevoProducto.price,
+    //             state: infoNuevoProducto.state
+    //         }
+    //         // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
+    //       };
           
-          await axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success('Producto actualizado con exito.')
-            setConsultarBackEnd(true);
-          }).catch(function (error) {
-            console.error(error);
-            toast.error('Producto no pudo ser actualizado.')
-          });
+    //       await axios.request(options).then(function (response) {
+    //         console.log(response.data);
+    //         toast.success('Producto actualizado con exito.')
+    //         setConsultarBackEnd(true);
+    //       }).catch(function (error) {
+    //         console.error(error);
+    //         toast.error('Producto no pudo ser actualizado.')
+    //       });
     };
+
         
-    const eliminarProducto = async() =>{
-        const options = {
-            method: 'DELETE',
-            url: `http://localhost:5000/productos/${producto._id}`,
-            headers: {'Content-Type': 'application/json'},
-            data:{...infoNuevoProducto, id:producto._id}
-          };
+    const deleteProducto = async() =>{
+        await eliminarProducto(
+            producto._id, 
+            (response)=>{
+                console.log(response.data);
+                toast.success('Producto eliminado exitosamente.')
+                setConsultarBackEnd(true);
+            },
+            (error)=>{
+                console.error(error);
+                toast.error('Error eliminando producto.');
+            }
+        )
+        // const options = {
+        //     method: 'DELETE',
+        //     url: `http://localhost:5000/productos/${producto._id}`,
+        //     headers: {'Content-Type': 'application/json'},
+        //     data:{...infoNuevoProducto, id:producto._id}
+        //   };
           
-          axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success('Producto eliminado exitosamente.')
-            setConsultarBackEnd(true);
-          }).catch(function (error) {
-            console.error(error);
-            toast.error('Error eliminando producto.')
-          });
+        //   axios.request(options).then(function (response) {
+        //     console.log(response.data);
+        //     toast.success('Producto eliminado exitosamente.')
+        //     setConsultarBackEnd(true);
+        //   }).catch(function (error) {
+        //     console.error(error);
+        //     toast.error('Error eliminando producto.')
+        //   });
     }
     useEffect(() => {
         return  console.log(edit)
@@ -234,7 +282,7 @@ const FilaProducto = ({producto, setConsultarBackEnd}) => {
                 }
                 <FontAwesomeIcon 
                     onClick={() => {
-                        eliminarProducto();
+                        deleteProducto();
                     }}
                 className='Products__table__remove' icon={faTrash} />
             </td>

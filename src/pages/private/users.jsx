@@ -26,7 +26,8 @@ const Users = () => {
 
     useEffect(() => {
         if (consultarBackEnd){
-            getUsuarios(setUsuarios, setConsultarBackEnd);
+            getUsuarios(setUsuarios);
+            setConsultarBackEnd(false);
         }
     }, [consultarBackEnd])
 

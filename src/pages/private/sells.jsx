@@ -33,7 +33,8 @@ const Sells = () => {
 
     useEffect(() => {
         if (consultarBackEnd){
-            getVentas(setVentas, setConsultarBackEnd);
+            getVentas(setVentas );
+            setConsultarBackEnd(false);
         }
     }, [consultarBackEnd])
 
