@@ -568,6 +568,36 @@ footer {
   margin:0.4rem 0rem;
 }
 
+.buscador_ventas{
+  top: 10px;
+  left: 0;
+  display: flexbox;
+  align-items: center;
+  position: relative;
+  top:-60px;
+}
+
+.buscador_productos{
+  top: 10px;
+  left: 0;
+  display: flexbox;
+  align-items: center;
+  position: relative;
+  top:-80px;
+}
+
+.drop_down_buscar{
+  border-radius: 16px;
+  border: none;
+  margin: 10px;
+}
+
+.buscar{
+  border-radius: 16px;
+  border-color: #0b2a3b5b;
+  height: 15px;
+}
+
 .Products__form__button{
   color: black;
   margin-top: 1rem;

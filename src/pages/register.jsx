@@ -28,19 +28,7 @@ const Register = () => {
     toast("Usuario registrado, pendiente por aprobación!");
     setTimeout(() => ""
     , 1000);
-    /*alert(`Your state values: \n 
-            Nombre: ${Nombre} \n
-            Apellidos: ${Apellidos} \n
-            email: ${email} \n 
-            password: ${password} \n 
-            You can replace this alert with your process`);*/
   };
-  /*const goToHome = (event) =>{
-    setTimeout(() => console.log('Initial timeout!'), 1000);
-  };
-  const notify = () => {
-    toast("Usiuario registrado, pendiente por aprobación!");
-  };*/
   return (
     <div className="Register__container">
       <div className="Register_login_header">
@@ -49,37 +37,37 @@ const Register = () => {
         </Link>
       </div>
       <h2 className="register_title">Registrate!</h2>
-      <form action="" className="Register__form" onSubmit={handleSubmit}>
+      <form action="" className="Register__form" >
         <div className="Register__inputs">
           <input
             type="text"
             placeholder="Nombre"
+            required
             onChange={handleNombreChange}
             value={Nombre}
-            required
           />
           <input
             type="text"
             placeholder="Apellidos"
+            required
             onChange={handleApellidosChange}
             value={Apellidos}
-            required
           />
           <input
             type="email"
             name="email"
             placeholder="Correo Electrónico"
+            required
             onChange={handleEmailChange}
             value={email}
-            required
           />
           <input
             type="password"
             name="password"
             placeholder="Contraseña"
+            required
             onChange={handlePasswordChange}
             value={password}
-            required
           />
         </div>
         <div className="notifications_check">
@@ -89,7 +77,6 @@ const Register = () => {
           </label>
         </div>
         <div>
-          {/* <Link to='/admin'> */}
           <button
             className="Register__submit"
             type="submit"
@@ -99,7 +86,6 @@ const Register = () => {
             Registrar
           </button>
           <ToastContainer />
-          {/* </Link> */}
         </div>
         <div className="Register__login">
           <span>¿Ya tienes cuenta?</span>
