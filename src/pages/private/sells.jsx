@@ -20,8 +20,30 @@ const Sells = () => {
     
 
     useEffect(() => {
-       getProductos(setProductos, setConsultarBackEnd);
-       getUsuarios(setUsuarios, setConsultarBackEnd);
+        const fetchUsers = async()=>{
+            await getUsuarios(
+                (response)=>{
+                    setUsuarios(response.data);
+                },
+                (error)=>{
+                    console.error(error);
+                }
+            )
+        };
+
+        const fetchProducts = async ()=>{
+            await getProductos(
+                (response)=>{
+                    setProductos(response.data);
+                },
+                (error)=>{
+                    console.error(error);
+                }
+            )
+        };
+
+       fetchUsers();
+       fetchProducts();
     }, [])
 
     useEffect( (e) => {
@@ -50,7 +72,7 @@ const Sells = () => {
             </div>
             <div className='abc'>
                 {verListaVentas ? 
-                    <MostrarVentas listaVentas={ventas} />
+                    <MostrarVentas listaVentas={ventas} usuarios={usuarios} productos={productos} setConsultarBackEnd={setConsultarBackEnd}/>
                 : 
                     <AgregarVenta productos={productos} usuarios={usuarios}/>}
             </div>
@@ -61,7 +83,7 @@ const Sells = () => {
 
 export default Sells
 
-const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
+const MostrarVentas = ({listaVentas,usuarios,productos, setConsultarBackEnd}) =>{
     const [busqueda, setBusqueda] = useState('');
     return <div className='Sells__container-table'>
         <div className='buscador_ventas'>
@@ -95,7 +117,7 @@ const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
             </thead>
             <tbody>
                 {listaVentas.map((venta) => {
-                    return <FilaVenta key={nanoid()} venta={venta} setConsultarBackEnd={setConsultarBackEnd} />
+                    return <FilaVenta key={nanoid()} venta={venta} usuarios={usuarios} productos={productos} setConsultarBackEnd={setConsultarBackEnd} />
                 })
                 }
                 
@@ -105,7 +127,9 @@ const MostrarVentas = ({listaVentas, setConsultarBackEnd}) =>{
 
 }
 
-const FilaVenta = ({venta, setConsultarBackEnd})=>{
+const FilaVenta = ({venta, usuarios, productos, setConsultarBackEnd})=>{
+    const [editVenta, setEditVenta] = useState(false);
+
     const [infoNuevaVenta, setInfoNuevaVenta] = useState({
         idSale : venta.idSale,
         idProduct : venta.idProduct,
@@ -117,7 +141,6 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
         nameBuyer : venta.nameBuyer,
         nameSeller : venta.nameSeller
     });
-    const [editVenta, setEditVenta] = useState(false);
     
     useEffect(() => {
         return console.log('Editando registro: ' + editVenta)
@@ -146,11 +169,11 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
             // data: {state: 'No Disponible', description: 'LIBRO 5', price: 20000}
           };
           
-          await axios.request(options).then(function (response) {
+          await axios.request(options).then((response)=> {
             console.log(response.data);
             toast.success('Venta actualizada con exito.')
             setConsultarBackEnd(true);
-          }).catch(function (error) {
+          }).catch((error)=> {
             console.error(error);
             toast.error('Venta no pudo ser actualizada.')
           });
@@ -194,7 +217,12 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                     {venta._id}
                 </td>
                 <td>
-                    {venta.idProduct}
+                    <select name="idProduct" defaultValue={0}>
+                        <option value={0}>Seleccione un libro</option>
+                        {productos.map((p)=>{
+                            return <option key={nanoid()}>{p.description}</option>
+                        })}
+                    </select>
                 </td>
                 <td>
                     <input
@@ -210,7 +238,8 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                         onChange={(e) => setInfoNuevaVenta({ setInfoNuevaVenta, unitValue: e.target.value })} 
                     />
                 </td>
-                <td>{infoNuevaVenta.quantity * infoNuevaVenta.unitValue}</td>
+                <td>
+                    <input type="text" name='quantity' defaultValue={infoNuevaVenta.quantity * infoNuevaVenta.unitValue}/></td>
                 <td>
                     <input
                         type="date"
@@ -220,18 +249,22 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
                 </td>
                 <td>{venta.idBuyer}</td>
                 <td>
+                    {venta.nameSeller}
+                </td>
+                <td>
                     <select 
                         defaultValue={0}
-                        name="nameBuyer" 
-                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, nameBuyer: e.target.value })}
+                        name="nameSeller" 
+                        onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, nameSeller: e.target.value })}
                     >
-                        <option disabled value={0}>Seleccione un estado</option>
-                        <option>En Proceso</option>
-                        <option>Cancelada</option>
-                        <option>Entregada</option>
+                        <option disabled value={0}>Seleccione un vendedor</option>
+                        {usuarios.map((u)=>{
+                            return <option key={nanoid()}>{u.name}</option>
+                        })
+                        }
+                       
                     </select>
                 </td>
-                <td>{venta.nameSeller}</td>
                 <td className='Products__table__icons'>
                     <FontAwesomeIcon 
                         onClick={() => {
@@ -280,13 +313,12 @@ const FilaVenta = ({venta, setConsultarBackEnd})=>{
 
 const AgregarVenta = ({productos, usuarios}) =>{
     const tags =[
-        {
-            htmlForOption:"idSale",
-            label: "Id de la venta",
-            typeOption:"number",
-            // disabled:true
-            disabled:false
-        },
+        // {
+        //     htmlForOption:"idSale",
+        //     label: "Id de la venta",
+        //     typeOption:"number",
+        //     disabled:true
+        // },
         {
             htmlForOption:"idProduct",
             label:"Id del producto",
@@ -330,18 +362,9 @@ const AgregarVenta = ({productos, usuarios}) =>{
             label:"Nombre del comprador",
             typeOption:"text",
             disabled:false
-        },
-        {
-            htmlForOption:"nameSeller",
-            label:"Nombre del vendedor",
-            typeOption:"text",
-            disabled:false
-        },
+        }
     ]
-    // const productos =[
-    //     "Seleccione su libro", "Libro 1","Libro 2","Libro 3","Libro 4","Libro 5",
-    //     "Libro 6","Libro 7","Libro 8","Libro 9","Libro 10"
-    // ]
+
     const formSales = useRef(null);
     const submitSale = async (e) => {
        console.log('Submitting sale form') 
@@ -359,7 +382,7 @@ const AgregarVenta = ({productos, usuarios}) =>{
             url: 'http://localhost:5000/ventas',
             headers: {'Content-Type': 'application/json'},
             data: {
-                idSale: nuevoSale.idSale,
+                idSale: nuevoSale._id,
                 idProduct: nuevoSale.idProduct,
                 quantity:nuevoSale.quantity,
                 unitValue:nuevoSale.unitValue,
@@ -390,16 +413,16 @@ const AgregarVenta = ({productos, usuarios}) =>{
         >
             <label htmlFor="productName" className='Products__form__label'>
                 Libro
-                <select name="productName" defaultValue={0}>
-                    <option disabled value={0} >Seleccione el Libro </option>
+                <select name="productName" defaultValue={-1}>
+                    <option disabled value={-1} >Seleccione el Libro </option>
                     {productos.map((producto) => {
                             return <option key={nanoid()}>{producto.description}</option>
                     })}
                 </select>
-            </label>
-            <label htmlFor="sellerName" className='Products__form__label'>
+            </label> 
+            <label htmlFor="nameSeller" className='Products__form__label'>
                 Vendedor
-                <select name="sellerName" defaultValue={0}>
+                <select name="nameSeller" defaultValue={0}>
                     <option disabled value={0} >Seleccione el vendedor </option>
                     {usuarios.map((usuario) => {
                             return <option key={nanoid()}>{usuario.name}</option>
